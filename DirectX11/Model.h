@@ -32,6 +32,7 @@ public:
 		return mIndexCount;
 	}
 private:
+	// texture.vs의 구조체랑 같아야 함.
 	struct VertexType
 	{
 		DirectX::XMFLOAT3 position;

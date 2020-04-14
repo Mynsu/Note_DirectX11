@@ -1,8 +1,6 @@
 #pragma once
-#include <fstream>
 #include <d3d11.h>
 #include <DirectXMath.h>
-#include <d3dcompiler.h>
 
 class ColorShader
 {
@@ -48,7 +46,10 @@ private:
 	bool initializeShader( ID3D11Device* device, HWND hWnd, WCHAR* vsFileName, WCHAR* psFileName );
 	void shutDownShader( );
 	void outputShaderErrorMessage( ID3D10Blob* errorMessage, HWND hWnd, WCHAR* shaderFileName );
-	bool setShaderParameters( ID3D11DeviceContext*, DirectX::XMMATRIX&, DirectX::XMMATRIX&, DirectX::XMMATRIX& );
+	bool setShaderParameters( ID3D11DeviceContext* deviceContext,
+							 DirectX::XMMATRIX& worldMatrix,
+							 DirectX::XMMATRIX& viewMatrix,
+							 DirectX::XMMATRIX& projectionMatrix );
 	void renderShader( ID3D11DeviceContext* deviceContext, const int indexCount );
 	
 	ID3D11VertexShader* mVertexShader;
