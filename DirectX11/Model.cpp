@@ -1,9 +1,11 @@
 #include "Model.h"
+#include "Texture.h"
 
 bool Model::initializeBuffers( ID3D11Device* device )
 {
-	mVertexCount = 8;
-	mIndexCount = 9;
+	//mVertexCount = 4;
+	mVertexCount = 6;
+	mIndexCount = 6;
 	VertexType* vertices = nullptr;
 	vertices = new VertexType[mVertexCount];
 	if ( nullptr == vertices )
@@ -18,31 +20,50 @@ bool Model::initializeBuffers( ID3D11Device* device )
 		return false;
 	}
 
-	vertices[0].position = DirectX::XMFLOAT3(-1.f, -0.f, 0.f);
-	vertices[0].color = DirectX::XMFLOAT4(1.f, 0.f, 0.f, 1.f);
+	//vertices[0].position = DirectX::XMFLOAT3(-1.f, -1.f, 0.f); //Bottom Left
+	//vertices[0].texture = DirectX::XMFLOAT2(0.f, 1.f);
 
-	vertices[1].position = DirectX::XMFLOAT3(0.f, 1.f, 0.f);
-	vertices[1].color = DirectX::XMFLOAT4(1.f, 0.f, 0.f, 1.f);
+	//vertices[1].position = DirectX::XMFLOAT3(-1.f, 1.f, 0.f); //Top Left
+	//vertices[1].texture = DirectX::XMFLOAT2(0.f, 0.f);
 
-	vertices[2].position = DirectX::XMFLOAT3(1.f, 0.f, 0.f);
-	vertices[2].color = DirectX::XMFLOAT4(1.f, 0.f, 0.f, 1.f);
+	//vertices[2].position = DirectX::XMFLOAT3(1.f, 1.f, 0.f); //Top Right
+	//vertices[2].texture = DirectX::XMFLOAT2(1.f, 0.f);
 
-	vertices[3].position = DirectX::XMFLOAT3(-1.f, -1.f, 0.f);
-	vertices[3].color = DirectX::XMFLOAT4(0.f, 0.f, 1.f, 1.f);
+	//vertices[3].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
+	//vertices[3].texture = DirectX::XMFLOAT2(1.f, 1.f);
 
-	vertices[4].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f);
-	vertices[4].color = DirectX::XMFLOAT4(0.f, 0.f, 1.f, 1.f);
+	//indices[0] = 0; //Bottom Left
+	//indices[1] = 1; //Top Left
+	//indices[2] = 3; //Bottom Right
+	//indices[3] = 3; //Bottom Right
+	//indices[4] = 1; //Top Left
+	//indices[5] = 2; //Top Right
 
-	vertices[5].position = DirectX::XMFLOAT3(0.f, -2.f, 0.f);
-	vertices[5].color = DirectX::XMFLOAT4(0.f, 0.f, 1.f, 1.f);
+	vertices[0].position = DirectX::XMFLOAT3(-1.f, -1.f, 0.f); //Bottom Left
+	vertices[0].texture = DirectX::XMFLOAT2(0.f, 1.f);
 
-	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 2;
-	indices[3] = 3;
-	indices[4] = 4;
-	indices[5] = 5;
+	vertices[1].position = DirectX::XMFLOAT3(-1.f, 1.f, 0.f); //Top Left
+	vertices[1].texture = DirectX::XMFLOAT2(0.f, 0.f);
 
+	vertices[2].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
+	vertices[2].texture = DirectX::XMFLOAT2(1.f, 1.f);
+
+	vertices[3].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
+	vertices[3].texture = DirectX::XMFLOAT2(1.f, 1.f);
+
+	vertices[4].position = DirectX::XMFLOAT3(-1.f, 1.f, 0.f); //Top Left
+	vertices[4].texture = DirectX::XMFLOAT2(0.f, 0.f);
+
+	vertices[5].position = DirectX::XMFLOAT3(1.f, 1.f, 0.f); //Top Right
+	vertices[5].texture = DirectX::XMFLOAT2(1.f, 0.f);
+
+	indices[0] = 0; //Bottom Left
+	indices[1] = 1; //Top Left
+	indices[2] = 2; //Bottom Right
+	indices[3] = 3; //Bottom Right
+	indices[4] = 4; //Top Left
+	indices[5] = 5; //Top Right
+	
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * mVertexCount;
@@ -55,7 +76,7 @@ bool Model::initializeBuffers( ID3D11Device* device )
 	vertexData.pSysMem = vertices;
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
-	HRESULT result = device->CreateBuffer( &vertexBufferDesc, &vertexData, &mVertexBuffer );
+	HRESULT result = device->CreateBuffer(&vertexBufferDesc, &vertexData, &mVertexBuffer);
 	if ( FAILED(result) )
 	{
 		return false;
@@ -109,4 +130,30 @@ void Model::renderBuffers( ID3D11DeviceContext* deviceContext )
 	deviceContext->IASetVertexBuffers( 0, 1, &mVertexBuffer, &stride, &offset );
 	deviceContext->IASetIndexBuffer( mIndexBuffer, DXGI_FORMAT_R32_UINT, 0 );
 	deviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+}
+
+bool Model::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* fileName)
+{
+	mTexture = new Texture;
+	if ( nullptr == mTexture )
+	{
+		return false;
+	}
+
+	if ( false == mTexture->initialize(device, deviceContext, fileName) )
+	{
+		return false;
+	}
+
+	return true;
+}
+
+void Model::releaseTexture()
+{
+	if ( nullptr != mTexture )
+	{
+		mTexture->shutDown();
+		delete mTexture;
+		mTexture = nullptr;
+	}
 }

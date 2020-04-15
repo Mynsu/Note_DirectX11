@@ -1,4 +1,6 @@
 #include "ColorShader.h"
+#include <d3dcompiler.h>
+#include <fstream>
 
 bool ColorShader::initializeShader( ID3D11Device* device, HWND hWnd, WCHAR* vsFileName, WCHAR* psFileName )
 {

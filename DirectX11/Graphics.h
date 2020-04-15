@@ -3,7 +3,7 @@
 #include "D3D.h"
 #include "Camera.h"
 #include "Model.h"
-#include "ColorShader.h"
+#include "TextureShader.h"
 
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLE = true;
@@ -32,5 +32,5 @@ private:
 	std::unique_ptr<D3D> mD3D;
 	std::unique_ptr<Camera> mCamera;
 	std::unique_ptr<Model> mModel;
-	std::unique_ptr<ColorShader> mColorShader;
+	std::unique_ptr<TextureShader> mTextureShader;
 };

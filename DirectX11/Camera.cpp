@@ -20,6 +20,7 @@ void Camera::render( )
 	lookAt.z = 1.f;
 	DirectX::XMVECTOR lookAtVector = XMLoadFloat3(&lookAt);
 
+	// 360 degree -> radian
 	float pitch = mRotationX * 0.0174532925f;
 	float yaw = mRotationY * 0.0174532925f;
 	float roll = mRotationZ * 0.0174532925f;
@@ -29,6 +30,6 @@ void Camera::render( )
 	upVector = DirectX::XMVector3TransformCoord(upVector, rotationMatrix);
 	
 	lookAtVector = DirectX::XMVectorAdd(positionVector, lookAtVector);
-
+	
 	mViewMatrix = DirectX::XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
 }

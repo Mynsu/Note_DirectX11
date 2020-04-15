@@ -20,7 +20,7 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 	{
 		return false;
 	}
-	mCamera->setPosition( 0.f, 0.f, -15.f );
+	mCamera->setPosition( 0.f, 0.f, -1.f );
 
 	mModel = std::make_unique<Model>();
 	if ( nullptr == mModel )
@@ -28,21 +28,21 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 		return false;
 	}
 
-	if ( false == mModel->initialize(mD3D->getDevice()) )
+	if ( false == mModel->initialize(mD3D->getDevice(), mD3D->getDeviceContext(), "data/wood.tga") )
 	{
 		MessageBox( hWnd, L"Could not initialize the model object", L"Error", MB_OK );
 		return false;
 	}
 
-	mColorShader = std::make_unique<ColorShader>();
-	if ( nullptr == mColorShader )
+	mTextureShader = std::make_unique<TextureShader>();
+	if ( nullptr == mTextureShader )
 	{
 		return false;
 	}
 	
-	if ( false == mColorShader->initialize(mD3D->getDevice(), hWnd) )
+	if ( false == mTextureShader->initialize(mD3D->getDevice(), hWnd) )
 	{
-		MessageBox( hWnd, L"Could not initialize the color shader object.", L"Error", MB_OK );
+		MessageBox( hWnd, L"Could not initialize the texture shader object.", L"Error", MB_OK );
 		return false;
 	}
 	
@@ -55,9 +55,9 @@ void Graphics::shutDown( )
 	{
 		mD3D->shutDown( );
 	}
-	if ( nullptr != mColorShader )
+	if ( nullptr != mTextureShader )
 	{
-		mColorShader->shutDown( );
+		mTextureShader->shutDown( );
 	}
 	if ( nullptr != mModel )
 	{
@@ -80,11 +80,12 @@ bool Graphics::render()
 
 	mModel->render( mD3D->getDeviceContext() );
 
-	if ( false == mColorShader->render(mD3D->getDeviceContext(),
-									   mModel->getIndexCount(),
-									   worldMatrix,
-									   viewMatrix,
-									   projectionMatrix) )
+	if ( false == mTextureShader->render(mD3D->getDeviceContext(),
+										 mModel->getIndexCount(),
+										 worldMatrix,
+										 viewMatrix,
+										 projectionMatrix,
+										 mModel->getTexture()) )
 	{
 		return false;
 	}
