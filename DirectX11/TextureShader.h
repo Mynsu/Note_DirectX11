@@ -7,7 +7,8 @@ class TextureShader
 {
 public:
 	TextureShader( )
-		: mVertexShader( nullptr ), mPixelShader( nullptr ), mLayout( nullptr ), mMatrixBuffer( nullptr )
+		: mVertexShader( nullptr ), mPixelShader( nullptr ), mLayout( nullptr ), mMatrixBuffer( nullptr ),
+		mSampleState( nullptr )
 	{}
 	TextureShader( const TextureShader& ) = delete;
 	~TextureShader( ) = default;

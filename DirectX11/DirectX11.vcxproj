@@ -46,6 +46,8 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,17 +58,23 @@
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\D3D.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.h" />
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Model.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\System.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.h" />
+    <ClInclude Include="TextureShader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="texture.ps">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
     </None>
     <None Include="texture.vs">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

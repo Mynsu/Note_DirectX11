@@ -62,10 +62,13 @@
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ColorShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.h">
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.h">
+    <ClInclude Include="TextureShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
