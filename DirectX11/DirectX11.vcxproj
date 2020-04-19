@@ -32,6 +32,9 @@
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -46,6 +49,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,17 +60,23 @@
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\D3D.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.h" />
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Light.h" />
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Model.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\System.h" />
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.h" />
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="texture.ps">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    <None Include="light.ps">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
     </None>
-    <None Include="texture.vs">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    <None Include="light.vs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

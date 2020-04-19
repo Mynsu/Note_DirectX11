@@ -20,7 +20,7 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 	{
 		return false;
 	}
-	mCamera->setPosition( 0.f, 0.f, -1.f );
+	mCamera->setPosition( 0.f, 0.f, -5.f );
 
 	mModel = std::make_unique<Model>();
 	if ( nullptr == mModel )
@@ -28,23 +28,32 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 		return false;
 	}
 
-	if ( false == mModel->initialize(mD3D->getDevice(), mD3D->getDeviceContext(), "data/wood.tga") )
+	if ( false == mModel->initialize(mD3D->getDevice(), mD3D->getDeviceContext(), "data/stone01.tga") )
 	{
 		MessageBox( hWnd, L"Could not initialize the model object", L"Error", MB_OK );
 		return false;
 	}
 
-	mTextureShader = std::make_unique<TextureShader>();
-	if ( nullptr == mTextureShader )
+	mLightShader = std::make_unique<LightShader>();
+	if ( nullptr == mLightShader )
 	{
 		return false;
 	}
 	
-	if ( false == mTextureShader->initialize(mD3D->getDevice(), hWnd) )
+	if ( false == mLightShader->initialize(mD3D->getDevice(), hWnd) )
 	{
 		MessageBox( hWnd, L"Could not initialize the texture shader object.", L"Error", MB_OK );
 		return false;
 	}
+
+	mLight = std::make_unique<Light>();
+	if ( nullptr == mLight )
+	{
+		return false;
+	}
+
+	mLight->setDiffuseColor( 0.f, 1.f, 0.f, 1.f );
+	mLight->setPosition( 0.f, 1.f, -1.f );
 	
 	return true;
 }
@@ -55,9 +64,9 @@ void Graphics::shutDown( )
 	{
 		mD3D->shutDown( );
 	}
-	if ( nullptr != mTextureShader )
+	if ( nullptr != mLightShader )
 	{
-		mTextureShader->shutDown( );
+		mLightShader->shutDown( );
 	}
 	if ( nullptr != mModel )
 	{
@@ -67,7 +76,7 @@ void Graphics::shutDown( )
 	//{ }
 }
 
-bool Graphics::render()
+bool Graphics::render(float rotation)
 {
 	mD3D->beginScene( 0.f, 0.f, 0.f, 1.f );
 
@@ -78,14 +87,20 @@ bool Graphics::render()
 	mCamera->getViewMatrix( viewMatrix );
 	mD3D->getProjectionMatrix( projectionMatrix );
 
+	rotation = DirectX::XMConvertToRadians(rotation);
+	DirectX::XMMATRIX rotationMatrix = DirectX::XMMatrixRotationY(rotation);
+	worldMatrix = worldMatrix*rotationMatrix;
+
 	mModel->render( mD3D->getDeviceContext() );
 
-	if ( false == mTextureShader->render(mD3D->getDeviceContext(),
-										 mModel->getIndexCount(),
-										 worldMatrix,
-										 viewMatrix,
-										 projectionMatrix,
-										 mModel->getTexture()) )
+	if ( false == mLightShader->render(mD3D->getDeviceContext(),
+										mModel->getIndexCount(),
+										worldMatrix,
+										viewMatrix,
+										projectionMatrix,
+										mModel->getTexture(),
+										mLight->getPosition(),
+										mLight->getDiffuseColor()) )
 	{
 		return false;
 	}

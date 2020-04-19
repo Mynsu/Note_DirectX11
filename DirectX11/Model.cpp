@@ -3,9 +3,8 @@
 
 bool Model::initializeBuffers( ID3D11Device* device )
 {
-	//mVertexCount = 4;
-	mVertexCount = 6;
-	mIndexCount = 6;
+	mVertexCount = 3;
+	mIndexCount = 3;
 	VertexType* vertices = nullptr;
 	vertices = new VertexType[mVertexCount];
 	if ( nullptr == vertices )
@@ -20,49 +19,21 @@ bool Model::initializeBuffers( ID3D11Device* device )
 		return false;
 	}
 
-	//vertices[0].position = DirectX::XMFLOAT3(-1.f, -1.f, 0.f); //Bottom Left
-	//vertices[0].texture = DirectX::XMFLOAT2(0.f, 1.f);
-
-	//vertices[1].position = DirectX::XMFLOAT3(-1.f, 1.f, 0.f); //Top Left
-	//vertices[1].texture = DirectX::XMFLOAT2(0.f, 0.f);
-
-	//vertices[2].position = DirectX::XMFLOAT3(1.f, 1.f, 0.f); //Top Right
-	//vertices[2].texture = DirectX::XMFLOAT2(1.f, 0.f);
-
-	//vertices[3].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
-	//vertices[3].texture = DirectX::XMFLOAT2(1.f, 1.f);
-
-	//indices[0] = 0; //Bottom Left
-	//indices[1] = 1; //Top Left
-	//indices[2] = 3; //Bottom Right
-	//indices[3] = 3; //Bottom Right
-	//indices[4] = 1; //Top Left
-	//indices[5] = 2; //Top Right
-
 	vertices[0].position = DirectX::XMFLOAT3(-1.f, -1.f, 0.f); //Bottom Left
 	vertices[0].texture = DirectX::XMFLOAT2(0.f, 1.f);
+	vertices[0].normal = DirectX::XMFLOAT3(0.f, 0.f, -1.f);
 
-	vertices[1].position = DirectX::XMFLOAT3(-1.f, 1.f, 0.f); //Top Left
-	vertices[1].texture = DirectX::XMFLOAT2(0.f, 0.f);
+	vertices[1].position = DirectX::XMFLOAT3(0.f, 1.f, 0.f); //Top Middle
+	vertices[1].texture = DirectX::XMFLOAT2(0.5f, 0.f);
+	vertices[1].normal = DirectX::XMFLOAT3(0.f, 0.f, -1.f);
 
 	vertices[2].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
 	vertices[2].texture = DirectX::XMFLOAT2(1.f, 1.f);
-
-	vertices[3].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
-	vertices[3].texture = DirectX::XMFLOAT2(1.f, 1.f);
-
-	vertices[4].position = DirectX::XMFLOAT3(-1.f, 1.f, 0.f); //Top Left
-	vertices[4].texture = DirectX::XMFLOAT2(0.f, 0.f);
-
-	vertices[5].position = DirectX::XMFLOAT3(1.f, 1.f, 0.f); //Top Right
-	vertices[5].texture = DirectX::XMFLOAT2(1.f, 0.f);
+	vertices[2].normal = DirectX::XMFLOAT3(0.f, 0.f, -1.f);
 
 	indices[0] = 0; //Bottom Left
-	indices[1] = 1; //Top Left
+	indices[1] = 1; //Top Middle
 	indices[2] = 2; //Bottom Right
-	indices[3] = 3; //Bottom Right
-	indices[4] = 4; //Top Left
-	indices[5] = 5; //Top Right
 	
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -71,7 +42,7 @@ bool Model::initializeBuffers( ID3D11Device* device )
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
-
+	
 	D3D11_SUBRESOURCE_DATA vertexData;
 	vertexData.pSysMem = vertices;
 	vertexData.SysMemPitch = 0;

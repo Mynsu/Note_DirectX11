@@ -3,7 +3,8 @@
 #include "D3D.h"
 #include "Camera.h"
 #include "Model.h"
-#include "TextureShader.h"
+#include "LightShader.h"
+#include "Light.h"
 
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLE = true;
@@ -21,16 +22,25 @@ public:
 	void shutDown( );
 	bool frame( )
 	{
-		if ( false == render() )
+		static float Rotation = 0.f;
+		Rotation += (float)DirectX::XM_PI*0.03f;
+		if ( Rotation > 360.f )
+		{
+			Rotation -= 360.f;
+		}
+
+		if ( false == render(Rotation) )
 		{
 			return false;
 		}
 		return true;
 	}
-	bool render( );
 private:
+	bool render( float rotation );
+
 	std::unique_ptr<D3D> mD3D;
 	std::unique_ptr<Camera> mCamera;
 	std::unique_ptr<Model> mModel;
-	std::unique_ptr<TextureShader> mTextureShader;
+	std::unique_ptr<LightShader> mLightShader;
+	std::unique_ptr<Light> mLight;
 };

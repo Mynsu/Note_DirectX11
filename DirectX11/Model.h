@@ -48,11 +48,16 @@ private:
 	{
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;
+		DirectX::XMFLOAT3 normal;
+	};
+	struct InstanceType
+	{
+		DirectX::XMFLOAT3 position;
 	};
 	bool initializeBuffers( ID3D11Device* device );
 	void shutDownBuffers( );
 	void renderBuffers( ID3D11DeviceContext* deviceContext );
-	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* fileName);
+	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* fileName );
 	void releaseTexture( );
 	ID3D11Buffer* mVertexBuffer;
 	ID3D11Buffer* mIndexBuffer;
