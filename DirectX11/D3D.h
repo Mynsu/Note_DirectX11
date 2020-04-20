@@ -2,6 +2,7 @@
 #pragma comment(lib, "d3d11" )
 #pragma comment(lib, "dxgi" )
 #pragma comment(lib, "d3dcompiler" )
+#pragma comment(lib, "directxtex.lib")
 #include <d3d11.h>
 #include <DirectXMath.h>
 

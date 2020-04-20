@@ -1,40 +1,29 @@
 #include "Model.h"
+#include <fstream>
 #include "Texture.h"
 
 bool Model::initializeBuffers( ID3D11Device* device )
 {
-	mVertexCount = 3;
-	mIndexCount = 3;
-	VertexType* vertices = nullptr;
-	vertices = new VertexType[mVertexCount];
+	VertexType* vertices = new VertexType[mVertexCount];
 	if ( nullptr == vertices )
 	{
 		return false;
 	}
 
-	unsigned long* indices = nullptr;
-	indices = new unsigned long[mIndexCount];
+	unsigned long* indices = new unsigned long[mIndexCount];
 	if ( nullptr == indices )
 	{
 		return false;
 	}
 
-	vertices[0].position = DirectX::XMFLOAT3(-1.f, -1.f, 0.f); //Bottom Left
-	vertices[0].texture = DirectX::XMFLOAT2(0.f, 1.f);
-	vertices[0].normal = DirectX::XMFLOAT3(0.f, 0.f, -1.f);
-
-	vertices[1].position = DirectX::XMFLOAT3(0.f, 1.f, 0.f); //Top Middle
-	vertices[1].texture = DirectX::XMFLOAT2(0.5f, 0.f);
-	vertices[1].normal = DirectX::XMFLOAT3(0.f, 0.f, -1.f);
-
-	vertices[2].position = DirectX::XMFLOAT3(1.f, -1.f, 0.f); //Bottom Right
-	vertices[2].texture = DirectX::XMFLOAT2(1.f, 1.f);
-	vertices[2].normal = DirectX::XMFLOAT3(0.f, 0.f, -1.f);
-
-	indices[0] = 0; //Bottom Left
-	indices[1] = 1; //Top Middle
-	indices[2] = 2; //Bottom Right
-	
+	for ( int i = 0; i < mVertexCount; ++i )
+	{
+		vertices[i].position = DirectX::XMFLOAT3(mModel[i].x, mModel[i].y, mModel[i].z);
+		vertices[i].texture = DirectX::XMFLOAT2(mModel[i].tu, mModel[i].tv);
+		vertices[i].normal = DirectX::XMFLOAT3(mModel[i].nx, mModel[i].ny, mModel[i].nz);
+		indices[i] = i;
+	}
+		
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * mVertexCount;
@@ -103,7 +92,7 @@ void Model::renderBuffers( ID3D11DeviceContext* deviceContext )
 	deviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 }
 
-bool Model::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* fileName)
+bool Model::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
 {
 	mTexture = new Texture;
 	if ( nullptr == mTexture )
@@ -126,5 +115,60 @@ void Model::releaseTexture()
 		mTexture->shutDown();
 		delete mTexture;
 		mTexture = nullptr;
+	}
+}
+
+bool Model::loadModel(char* fileName)
+{
+	std::ifstream fin;
+	fin.open(fileName);
+	if ( fin.fail() )
+	{
+		return false;
+	}
+
+	char input;
+	fin.get(input);
+	while ( input != ':' )
+	{
+		fin.get(input);
+	}
+
+	fin >> mVertexCount;
+	
+	mIndexCount = mVertexCount;
+
+	mModel = new ModelType[mVertexCount];
+	if ( nullptr == mModel )
+	{
+		return false;
+	}
+
+	fin.get(input);
+	while ( input != ':' )
+	{
+		fin.get(input);
+	}
+	fin.get(input);//
+	fin.get(input);//
+
+	for ( int i = 0; i < mVertexCount; ++i )
+	{
+		fin >> mModel[i].x >> mModel[i].y >> mModel[i].z;
+		fin >> mModel[i].tu >> mModel[i].tv;
+		fin >> mModel[i].nx >> mModel[i].ny >> mModel[i].nz;
+	}
+	
+	fin.close( );
+
+	return true;
+}
+
+void Model::releaseModel()
+{
+	if ( nullptr != mModel )
+	{
+		delete[] mModel;
+		mModel = nullptr;
 	}
 }

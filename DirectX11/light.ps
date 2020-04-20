@@ -21,7 +21,7 @@ float4 LightPixelShader( PixelInputType input ) : SV_TARGET
 
 	float4 diffuse = saturate(float4(input.diffuse, 1));
 	float4 outputColor = saturate(diffuse*diffuseColor);
-	//outputColor = outputColor*textureColor;
+	outputColor = outputColor*textureColor;
 
 	return outputColor;
 }

@@ -10,6 +10,9 @@
     <Filter Include="셰이더 파일">
       <UniqueIdentifier>{1e2d0481-d78c-4aa9-bde5-183f61631d8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{411f2a49-5678-4bb0-b95e-3091db791a93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Camera.cpp">
@@ -85,5 +88,10 @@
     <None Include="light.ps">
       <Filter>셰이더 파일</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\cube.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>

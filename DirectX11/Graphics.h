@@ -23,7 +23,7 @@ public:
 	bool frame( )
 	{
 		static float Rotation = 0.f;
-		Rotation += (float)DirectX::XM_PI*0.03f;
+		Rotation += (float)DirectX::XM_PI*0.04f;
 		if ( Rotation > 360.f )
 		{
 			Rotation -= 360.f;

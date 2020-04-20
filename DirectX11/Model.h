@@ -7,12 +7,17 @@ class Model
 {
 public:
 	Model( )
-		: mVertexBuffer( nullptr ), mIndexBuffer( nullptr ), mTexture( nullptr )
+		: mVertexBuffer( nullptr ), mIndexBuffer( nullptr ), mTexture( nullptr ), mModel( nullptr ), mScene(nullptr)
 	{}
 	Model( const Model& ) = delete;
 	~Model( ) = default;
-	bool initialize( ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* textureFileName )
+	bool initialize( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName, char* modelFileName )
 	{
+		if ( false == loadModel(modelFileName) )
+		{
+			return false;
+		}
+
 		if ( false == initializeBuffers(device) )
 		{
 			return false;
@@ -29,6 +34,7 @@ public:
 	{
 		shutDownBuffers( );
 		releaseTexture( );
+		releaseModel( );
 	}
 	void render( ID3D11DeviceContext* deviceContext )
 	{
@@ -54,13 +60,22 @@ private:
 	{
 		DirectX::XMFLOAT3 position;
 	};
+	struct ModelType
+	{
+		float x, y, z;
+		float tu, tv;
+		float nx, ny, nz;
+	};
 	bool initializeBuffers( ID3D11Device* device );
 	void shutDownBuffers( );
 	void renderBuffers( ID3D11DeviceContext* deviceContext );
-	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* fileName );
+	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName );
 	void releaseTexture( );
+	bool loadModel( char* fileName );
+	void releaseModel( );
 	ID3D11Buffer* mVertexBuffer;
 	ID3D11Buffer* mIndexBuffer;
 	int mVertexCount, mIndexCount;
 	Texture* mTexture;
+	ModelType* mModel;
 };
