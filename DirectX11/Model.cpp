@@ -1,32 +1,30 @@
 #include "Model.h"
 #include <fstream>
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+#include "assimp/mesh.h"
 #include "Texture.h"
 
 bool Model::initializeBuffers( ID3D11Device* device )
 {
-	VertexType* vertices = new VertexType[mVertexCount];
+	const uint32_t nVertices = (int)mModel.size();
+	VertexType* vertices = new VertexType[nVertices];
 	if ( nullptr == vertices )
 	{
 		return false;
 	}
 
-	unsigned long* indices = new unsigned long[mIndexCount];
-	if ( nullptr == indices )
-	{
-		return false;
-	}
-
-	for ( int i = 0; i < mVertexCount; ++i )
+	for ( uint32_t i = 0; i < nVertices; ++i )
 	{
 		vertices[i].position = DirectX::XMFLOAT3(mModel[i].x, mModel[i].y, mModel[i].z);
 		vertices[i].texture = DirectX::XMFLOAT2(mModel[i].tu, mModel[i].tv);
 		vertices[i].normal = DirectX::XMFLOAT3(mModel[i].nx, mModel[i].ny, mModel[i].nz);
-		indices[i] = i;
 	}
 		
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * mVertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(VertexType) * nVertices;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
@@ -44,14 +42,14 @@ bool Model::initializeBuffers( ID3D11Device* device )
 
 	D3D11_BUFFER_DESC indexBufferDesc;
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(unsigned long) * mIndexCount;
+	indexBufferDesc.ByteWidth = sizeof(unsigned long) * (UINT)mIndices.size();
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA indexData;
-	indexData.pSysMem = indices;
+	indexData.pSysMem = mIndices.data();
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 	result = device->CreateBuffer(&indexBufferDesc, &indexData, &mIndexBuffer);
@@ -62,8 +60,6 @@ bool Model::initializeBuffers( ID3D11Device* device )
 
 	delete[] vertices;
 	vertices = nullptr;
-	delete[] indices;
-	indices = nullptr;
 
 	return true;
 
@@ -120,55 +116,64 @@ void Model::releaseTexture()
 
 bool Model::loadModel(char* fileName)
 {
-	std::ifstream fin;
-	fin.open(fileName);
-	if ( fin.fail() )
+	Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(fileName,
+											 aiProcess_CalcTangentSpace |
+											 aiProcess_Triangulate |
+											 aiProcess_JoinIdenticalVertices |
+											 aiProcess_SortByPType |
+											 aiProcess_ConvertToLeftHanded |
+											 aiProcess_ValidateDataStructure |
+											 aiProcess_ImproveCacheLocality |
+											 aiProcess_RemoveRedundantMaterials |
+											 aiProcess_GenUVCoords |
+											 aiProcess_TransformUVCoords |
+											 aiProcess_FindInstances |
+											 aiProcess_LimitBoneWeights |
+											 aiProcess_OptimizeMeshes |
+											 aiProcess_GenSmoothNormals |
+											 aiProcess_SplitLargeMeshes);
+	if ( nullptr == scene )
 	{
 		return false;
 	}
 
-	char input;
-	fin.get(input);
-	while ( input != ':' )
+	const uint32_t nMeshes = scene->mNumMeshes;
+	for ( uint32_t i = 0; nMeshes != i; ++i )
 	{
-		fin.get(input);
+		const aiMesh* mesh = scene->mMeshes[i];
+		const uint32_t nVerticesAMesh = mesh->mNumVertices;
+		mModel.reserve(nVerticesAMesh);
+		for ( uint32_t i = 0; i < nVerticesAMesh; ++i )
+		{
+			ModelType modelType;
+			modelType.x = mesh->mVertices[i].x;
+			modelType.y = mesh->mVertices[i].y;
+			modelType.z = mesh->mVertices[i].z;
+			modelType.nx = mesh->mNormals[i].x;
+			modelType.ny = mesh->mNormals[i].y;
+			modelType.nz = mesh->mNormals[i].z;
+			if ( mesh->HasTextureCoords(0) )
+			{
+				modelType.tu = mesh->mTextureCoords[0][i].x;
+				modelType.tv = mesh->mTextureCoords[0][i].y;
+			}
+			else
+			{
+				modelType.tu = modelType.tv = 0.f;
+			}
+			mModel.emplace_back(modelType);
+		}
+		const uint32_t nFacesAMesh = mesh->mNumFaces;
+		mIndices.reserve(nFacesAMesh*3);
+		for ( uint32_t i = 0; nFacesAMesh != i; ++i )
+		{
+			const aiFace& face = mesh->mFaces[i];
+			mIndices.emplace_back(face.mIndices[0]);
+			mIndices.emplace_back(face.mIndices[1]);
+			mIndices.emplace_back(face.mIndices[2]);
+		}
 	}
-
-	fin >> mVertexCount;
-	
-	mIndexCount = mVertexCount;
-
-	mModel = new ModelType[mVertexCount];
-	if ( nullptr == mModel )
-	{
-		return false;
-	}
-
-	fin.get(input);
-	while ( input != ':' )
-	{
-		fin.get(input);
-	}
-	fin.get(input);//
-	fin.get(input);//
-
-	for ( int i = 0; i < mVertexCount; ++i )
-	{
-		fin >> mModel[i].x >> mModel[i].y >> mModel[i].z;
-		fin >> mModel[i].tu >> mModel[i].tv;
-		fin >> mModel[i].nx >> mModel[i].ny >> mModel[i].nz;
-	}
-	
-	fin.close( );
 
 	return true;
-}
-
-void Model::releaseModel()
-{
-	if ( nullptr != mModel )
-	{
-		delete[] mModel;
-		mModel = nullptr;
-	}
 }
