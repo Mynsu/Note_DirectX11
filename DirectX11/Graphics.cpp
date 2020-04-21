@@ -54,6 +54,8 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 		return false;
 	}
 
+	mLight->setAmbientColor( 0.1f, 0.1f, 0.1f, 1.f );
+	//mLight->setAmbientColor( 0.f, 0.f, 0.f, 1.f );
 	mLight->setDiffuseColor( 1.f, 1.f, 1.f, 1.f );
 	mLight->setPosition( 0.f, 0.f, -2.f );
 	
@@ -102,7 +104,8 @@ bool Graphics::render(float rotation)
 										projectionMatrix,
 										mModel->getTexture(),
 										mLight->getPosition(),
-										mLight->getDiffuseColor()) )
+										mLight->getDiffuseColor(),
+									   mLight->getAmbientColor()) )
 	{
 		return false;
 	}

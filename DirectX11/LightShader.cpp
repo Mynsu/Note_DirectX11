@@ -208,7 +208,8 @@ bool LightShader::setShaderParameters( ID3D11DeviceContext* deviceContext,
 										DirectX::XMMATRIX& projectionMatrix,
 										ID3D11ShaderResourceView* texture,
 										DirectX::XMFLOAT3 lightPosition,
-										DirectX::XMFLOAT4 diffuseColor )
+										DirectX::XMFLOAT4 diffuseColor,
+										DirectX::XMFLOAT4 ambientColor )
 {
 	worldMatrix = DirectX::XMMatrixTranspose(worldMatrix);
 	viewMatrix = DirectX::XMMatrixTranspose(viewMatrix);
@@ -238,6 +239,7 @@ bool LightShader::setShaderParameters( ID3D11DeviceContext* deviceContext,
 		return false;
 	}
 	LightBufferType* dataPtr2 = (LightBufferType*)mappedResource.pData;
+	dataPtr2->ambientColor = ambientColor;
 	dataPtr2->diffuseColor = diffuseColor;
 	dataPtr2->lightPosition = lightPosition;
 	dataPtr2->padding = 0.0f;

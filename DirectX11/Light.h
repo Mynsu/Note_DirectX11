@@ -9,6 +9,10 @@ public:
 	Light( const Light& ) = delete;
 	~Light() = default;
 
+	void setAmbientColor( float red, float green, float blue, float alpha )
+	{
+		mAmbientColor = DirectX::XMFLOAT4(red, green, blue, alpha);
+	}
 	void setDiffuseColor( float red, float green, float blue, float alpha )
 	{
 		mDiffuseColor = DirectX::XMFLOAT4(red, green, blue, alpha);
@@ -16,6 +20,10 @@ public:
 	void setPosition( float x, float y, float z )
 	{
 		mPosition = DirectX::XMFLOAT3(x, y, z);
+	}
+	DirectX::XMFLOAT4 getAmbientColor()
+	{
+		return mAmbientColor;
 	}
 	DirectX::XMFLOAT4 getDiffuseColor()
 	{
@@ -26,6 +34,7 @@ public:
 		return mPosition;
 	}
 private:
+	DirectX::XMFLOAT4 mAmbientColor;
 	DirectX::XMFLOAT4 mDiffuseColor;
 	DirectX::XMFLOAT3 mPosition;
 };

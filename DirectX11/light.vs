@@ -7,6 +7,7 @@ cbuffer MatrixBuffer
 
 cbuffer LightBuffer
 {
+	float4 ambientColor;
 	float4 diffuseColor;
 	float3 lightPosition;
 	float padding;

@@ -7,7 +7,7 @@ class Model
 {
 public:
 	Model( )
-		: mVertexBuffer( nullptr ), mIndexBuffer( nullptr ), mTexture( nullptr ), mModel( nullptr ), mScene(nullptr)
+		: mVertexBuffer( nullptr ), mIndexBuffer( nullptr ), mTexture( nullptr ), mModel( nullptr )
 	{}
 	Model( const Model& ) = delete;
 	~Model( ) = default;

@@ -29,10 +29,10 @@ public:
 	}
 	bool render( ID3D11DeviceContext* deviceContext, int indexCount,
 				DirectX::XMMATRIX& worldMatrix, DirectX::XMMATRIX& viewMatrix, DirectX::XMMATRIX& projectionMatrix,
-				ID3D11ShaderResourceView* texture, DirectX::XMFLOAT3 lightPosition, DirectX::XMFLOAT4 diffuseColor )
+				ID3D11ShaderResourceView* texture, DirectX::XMFLOAT3 lightPosition, DirectX::XMFLOAT4 diffuseColor, DirectX::XMFLOAT4 ambientColor )
 	{
 		if ( false == setShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture,
-										  lightPosition, diffuseColor) )
+										  lightPosition, diffuseColor, ambientColor ) )
 		{
 			return false;
 		}
@@ -49,6 +49,7 @@ private:
 	};
 	struct LightBufferType
 	{
+		DirectX::XMFLOAT4 ambientColor;
 		DirectX::XMFLOAT4 diffuseColor;
 		DirectX::XMFLOAT3 lightPosition;
 		float padding; // CreateBuffer(...) 함수를 호출하려면 16바이트의 배수여야 함.
@@ -62,7 +63,8 @@ private:
 							 DirectX::XMMATRIX& projectionMatrix,
 							 ID3D11ShaderResourceView* texture,
 							 DirectX::XMFLOAT3 lightPosition,
-							 DirectX::XMFLOAT4 diffuseColor );
+							 DirectX::XMFLOAT4 diffuseColor,
+							 DirectX::XMFLOAT4 ambientColor );
 	void renderShader( ID3D11DeviceContext* deviceContext, const int indexCount );
 
 	ID3D11VertexShader* mVertexShader;
