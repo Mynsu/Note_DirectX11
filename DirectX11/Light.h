@@ -21,6 +21,14 @@ public:
 	{
 		mPosition = DirectX::XMFLOAT3(x, y, z);
 	}
+	void setSpecularColor( float red, float green, float blue, float alpha )
+	{
+		mSpecularColor = DirectX::XMFLOAT4(red, green, blue, alpha);
+	}
+	void setSpecularPower( float power )
+	{
+		mSpecularPower = power;
+	}
 	DirectX::XMFLOAT4 getAmbientColor()
 	{
 		return mAmbientColor;
@@ -33,8 +41,18 @@ public:
 	{
 		return mPosition;
 	}
+	DirectX::XMFLOAT4 getSpecularColor()
+	{
+		return mSpecularColor;
+	}
+	float getSpecularPower()
+	{
+		return mSpecularPower;
+	}
 private:
 	DirectX::XMFLOAT4 mAmbientColor;
 	DirectX::XMFLOAT4 mDiffuseColor;
 	DirectX::XMFLOAT3 mPosition;
+	DirectX::XMFLOAT4 mSpecularColor;
+	float mSpecularPower;
 };

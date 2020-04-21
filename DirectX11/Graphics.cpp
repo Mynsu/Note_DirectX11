@@ -55,9 +55,10 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 	}
 
 	mLight->setAmbientColor( 0.1f, 0.1f, 0.1f, 1.f );
-	//mLight->setAmbientColor( 0.f, 0.f, 0.f, 1.f );
 	mLight->setDiffuseColor( 1.f, 1.f, 1.f, 1.f );
-	mLight->setPosition( 0.f, 0.f, -2.f );
+	mLight->setPosition( 0.f, 0.f, -3.f );
+	mLight->setSpecularColor( 1.f, 1.f, 1.f, 1.f );
+	mLight->setSpecularPower( 5.f );
 	
 	return true;
 }
@@ -105,7 +106,9 @@ bool Graphics::render(float rotation)
 										mModel->getTexture(),
 										mLight->getPosition(),
 										mLight->getDiffuseColor(),
-									   mLight->getAmbientColor()) )
+									   mLight->getAmbientColor(),
+									   mCamera->getPosition(),
+									   mLight->getSpecularColor(), mLight->getSpecularPower()) )
 	{
 		return false;
 	}
