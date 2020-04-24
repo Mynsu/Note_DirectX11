@@ -6,6 +6,31 @@
 #include "assimp/mesh.h"
 #include "Texture.h"
 
+bool Model::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName, char* modelFileName)
+{
+	if ( false == loadModel(modelFileName) )
+	{
+		return false;
+	}
+
+	if ( false == initializeBuffers(device) )
+	{
+		return false;
+	}
+
+	if ( false == loadTexture(device, deviceContext, textureFileName) )
+	{
+		return false;
+	}
+
+	return true;
+}
+
+void Model::render(ID3D11DeviceContext* deviceContext)
+{
+	renderBuffers( deviceContext );
+}
+
 bool Model::initializeBuffers( ID3D11Device* device )
 {
 	const uint32_t nVertices = (int)mModel.size();

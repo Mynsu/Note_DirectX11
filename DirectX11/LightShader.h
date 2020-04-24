@@ -12,17 +12,7 @@ public:
 	{}
 	LightShader( const LightShader& ) = delete;
 	~LightShader( ) = default;
-	bool initialize( ID3D11Device* device, HWND hWnd )
-	{
-		WCHAR vs[] = L"light.vs";
-		WCHAR ps[] = L"light.ps";
-		if ( false == initializeShader(device, hWnd, vs, ps) )
-		{
-			return false;
-		}
-
-		return true;
-	}
+	bool initialize( ID3D11Device* device, HWND hWnd );
 	void shutDown()
 	{
 		shutDownShader();
@@ -31,18 +21,7 @@ public:
 				DirectX::XMMATRIX& worldMatrix, DirectX::XMMATRIX& viewMatrix, DirectX::XMMATRIX& projectionMatrix,
 				ID3D11ShaderResourceView* texture,
 				DirectX::XMFLOAT3 lightPosition, DirectX::XMFLOAT4 diffuseColor, DirectX::XMFLOAT4 ambientColor,
-				DirectX::XMFLOAT3 cameraPosition, DirectX::XMFLOAT4 specularColor, const float specularPower )
-	{
-		if ( false == setShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture,
-										  lightPosition, diffuseColor, ambientColor,
-										  cameraPosition, specularColor, specularPower) )
-		{
-			return false;
-		}
-		renderShader(deviceContext, indexCount);
-
-		return true;
-	}
+				DirectX::XMFLOAT3 cameraPosition, DirectX::XMFLOAT4 specularColor, const float specularPower );
 private:
 	struct MatrixBufferType
 	{

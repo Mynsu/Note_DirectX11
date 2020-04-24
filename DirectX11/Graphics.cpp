@@ -81,6 +81,22 @@ void Graphics::shutDown( )
 	//{ }
 }
 
+bool Graphics::frame()
+{
+	static float Rotation = 0.f;
+	Rotation += (float)DirectX::XM_PI*0.04f;
+	if ( Rotation > 360.f )
+	{
+		Rotation -= 360.f;
+	}
+
+	if ( false == render(Rotation) )
+	{
+		return false;
+	}
+	return true;
+}
+
 bool Graphics::render(float rotation)
 {
 	mD3D->beginScene( 0.f, 0.f, 0.f, 1.f );

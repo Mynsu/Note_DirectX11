@@ -13,35 +13,14 @@ public:
 	{}
 	Model( const Model& ) = delete;
 	~Model( ) = default;
-	bool initialize( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName, char* modelFileName )
-	{
-		if ( false == loadModel(modelFileName) )
-		{
-			return false;
-		}
-
-		if ( false == initializeBuffers(device) )
-		{
-			return false;
-		}
-
-		if ( false == loadTexture(device, deviceContext, textureFileName) )
-		{
-			return false;
-		}
-
-		return true;
-	}
+	bool initialize( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName, char* modelFileName );
 	void shutDown( )
 	{
 		shutDownBuffers( );
 		releaseTexture( );
 		//releaseModel( );
 	}
-	void render( ID3D11DeviceContext* deviceContext )
-	{
-		renderBuffers( deviceContext );
-	}
+	void render( ID3D11DeviceContext* deviceContext );
 	int getIndexCount( )
 	{
 		return (int)mIndices.size();

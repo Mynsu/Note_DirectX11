@@ -20,21 +20,7 @@ public:
 
 	bool initialize( const int screenWidth, const int screenHeight, HWND hWnd );
 	void shutDown( );
-	bool frame( )
-	{
-		static float Rotation = 0.f;
-		Rotation += (float)DirectX::XM_PI*0.04f;
-		if ( Rotation > 360.f )
-		{
-			Rotation -= 360.f;
-		}
-
-		if ( false == render(Rotation) )
-		{
-			return false;
-		}
-		return true;
-	}
+	bool frame( );
 private:
 	bool render( float rotation );
 
