@@ -22,7 +22,7 @@ public:
 	void shutDown( );
 	bool frame( );
 private:
-	bool render( float rotation );
+	bool render( float rotation, DirectX::XMFLOAT3 position );
 
 	std::unique_ptr<D3D> mD3D;
 	std::unique_ptr<Camera> mCamera;

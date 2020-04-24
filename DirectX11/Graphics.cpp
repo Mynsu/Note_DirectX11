@@ -84,20 +84,29 @@ void Graphics::shutDown( )
 bool Graphics::frame()
 {
 	static float Rotation = 0.f;
-	Rotation += (float)DirectX::XM_PI*0.04f;
+	/*Rotation += (float)DirectX::XM_PI*0.04f;
 	if ( Rotation > 360.f )
 	{
 		Rotation -= 360.f;
+	}*/
+	//
+	static DirectX::XMFLOAT3 Position(0.f, 0.f, 0.f);
+	static float DeltaZ = 0.01f;
+	if ( 1.f < Position.z || Position.z < -1.f )
+	{
+		DeltaZ *= -1.f;
 	}
+	Position.z += DeltaZ;
+	//
 
-	if ( false == render(Rotation) )
+	if ( false == render(Rotation, Position) )
 	{
 		return false;
 	}
 	return true;
 }
 
-bool Graphics::render(float rotation)
+bool Graphics::render(float rotation, DirectX::XMFLOAT3 position)
 {
 	mD3D->beginScene( 0.f, 0.f, 0.f, 1.f );
 
@@ -107,6 +116,12 @@ bool Graphics::render(float rotation)
 	mD3D->getWorldMatrix( worldMatrix );
 	mCamera->getViewMatrix( viewMatrix );
 	mD3D->getProjectionMatrix( projectionMatrix );
+
+	//
+	//DirectX::XMMatrixTranslationFromVector(position);
+	DirectX::XMMATRIX traslationMatrix = DirectX::XMMatrixTranslation(position.x, position.y, position.z);
+	worldMatrix += traslationMatrix;
+	//
 
 	rotation = DirectX::XMConvertToRadians(rotation);
 	DirectX::XMMATRIX rotationMatrix = DirectX::XMMatrixRotationY(rotation);
