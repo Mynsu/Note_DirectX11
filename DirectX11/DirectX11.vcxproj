@@ -70,6 +70,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Moon 2K.fbx" />
     <None Include="light.ps">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
@@ -82,6 +83,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\cube.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Bump_2K.tga" />
+    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Diffuse_2K.tga" />
+    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\stone01.tga" />
+    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\wood.tga" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

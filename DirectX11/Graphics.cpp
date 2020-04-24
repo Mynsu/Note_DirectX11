@@ -28,8 +28,8 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 		return false;
 	}
 
-	char textureFileName[] = "data/stone01.tga";
-	char modelFileName[] = "data/cube.txt";
+	char textureFileName[] = "data/Diffuse_2K.tga";
+	char modelFileName[] = "data/Moon 2K.fbx";
 	if ( false == mModel->initialize(mD3D->getDevice(), mD3D->getDeviceContext(), textureFileName, modelFileName) )
 	{
 		MessageBox( hWnd, L"Could not initialize the model object", L"Error", MB_OK );
@@ -56,7 +56,7 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 
 	mLight->setAmbientColor( 0.1f, 0.1f, 0.1f, 1.f );
 	mLight->setDiffuseColor( 1.f, 1.f, 1.f, 1.f );
-	mLight->setPosition( 0.f, 0.f, -3.f );
+	mLight->setPosition( 0.f, 0.f, -10.f );
 	mLight->setSpecularColor( 1.f, 1.f, 1.f, 1.f );
 	mLight->setSpecularPower( 5.f );
 	
