@@ -1,13 +1,15 @@
 #pragma once
+#include <vector>
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include "Texture.h"
+#pragma comment(lib, "assimp-vc141-mtd")
 
 class Model
 {
 public:
 	Model( )
-		: mVertexBuffer( nullptr ), mIndexBuffer( nullptr ), mTexture( nullptr ), mModel( nullptr )
+		: mVertexBuffer( nullptr ), mIndexBuffer( nullptr ), mTexture( nullptr )
 	{}
 	Model( const Model& ) = delete;
 	~Model( ) = default;
@@ -34,7 +36,7 @@ public:
 	{
 		shutDownBuffers( );
 		releaseTexture( );
-		releaseModel( );
+		//releaseModel( );
 	}
 	void render( ID3D11DeviceContext* deviceContext )
 	{
@@ -42,7 +44,7 @@ public:
 	}
 	int getIndexCount( )
 	{
-		return mIndexCount;
+		return (int)mIndices.size();
 	}
 	ID3D11ShaderResourceView* getTexture( )
 	{
@@ -72,10 +74,10 @@ private:
 	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName );
 	void releaseTexture( );
 	bool loadModel( char* fileName );
-	void releaseModel( );
+	//void releaseModel( );
 	ID3D11Buffer* mVertexBuffer;
 	ID3D11Buffer* mIndexBuffer;
-	int mVertexCount, mIndexCount;
 	Texture* mTexture;
-	ModelType* mModel;
+	std::vector<ModelType> mModel;
+	std::vector<unsigned long> mIndices;
 };
