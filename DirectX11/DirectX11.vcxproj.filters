@@ -15,69 +15,78 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Camera.cpp">
+    <ClCompile Include="Camera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\System.cpp">
+    <ClCompile Include="System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Model.cpp">
+    <ClCompile Include="Model.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.cpp">
+    <ClCompile Include="Graphics.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ColorShader.cpp">
+    <ClCompile Include="ColorShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\D3D.cpp">
+    <ClCompile Include="D3D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.cpp">
+    <ClCompile Include="TextureShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.cpp">
+    <ClCompile Include="Texture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.cpp">
+    <ClCompile Include="LightShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Bitmap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\System.h">
+    <ClInclude Include="System.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Model.h">
+    <ClInclude Include="Model.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.h">
+    <ClInclude Include="Input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\D3D.h">
+    <ClInclude Include="D3D.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Camera.h">
+    <ClInclude Include="Camera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.h">
+    <ClInclude Include="Graphics.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ColorShader.h">
+    <ClInclude Include="ColorShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.h">
+    <ClInclude Include="TextureShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.h">
+    <ClInclude Include="Texture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.h">
+    <ClInclude Include="LightShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Light.h">
+    <ClInclude Include="Light.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ScriptLoader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Bitmap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -88,26 +97,35 @@
     <None Include="light.ps">
       <Filter>셰이더 파일</Filter>
     </None>
-    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Moon 2K.fbx">
+    <None Include="data\Moon 2K.fbx">
       <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Script.lua">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\texture.vs">
+      <Filter>셰이더 파일</Filter>
+    </None>
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\texture.ps">
+      <Filter>셰이더 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\cube.txt">
+    <Text Include="data\cube.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Diffuse_2K.tga">
+    <Image Include="data\Diffuse_2K.tga">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\stone01.tga">
+    <Image Include="data\stone01.tga">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\wood.tga">
+    <Image Include="data\wood.tga">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Bump_2K.tga">
+    <Image Include="data\Bump_2K.tga">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

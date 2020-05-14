@@ -19,76 +19,97 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Camera.cpp">
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Bitmap.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ColorShader.cpp">
+    <ClCompile Include="Camera.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ColorShader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\D3D.cpp">
+    <ClCompile Include="D3D.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.cpp">
+    <ClCompile Include="Graphics.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.cpp">
+    <ClCompile Include="LightShader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\main.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Model.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\System.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Camera.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ColorShader.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\D3D.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Graphics.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Light.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\LightShader.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Model.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\System.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Texture.h" />
-    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\TextureShader.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Moon 2K.fbx" />
-    <None Include="light.ps">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TextureShader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Bitmap.h" />
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ScriptLoader.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColorShader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="D3D.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Light.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="System.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureShader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Script.lua" />
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\texture.ps" />
+    <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\texture.vs" />
+    <None Include="data\Moon 2K.fbx" />
+    <None Include="light.ps">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="light.vs">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\cube.txt" />
+    <Text Include="data\cube.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Bump_2K.tga" />
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\Diffuse_2K.tga" />
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\stone01.tga" />
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\wood.tga" />
+    <Image Include="data\Bump_2K.tga" />
+    <Image Include="data\Diffuse_2K.tga" />
+    <Image Include="data\stone01.tga" />
+    <Image Include="data\wood.tga" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -178,12 +199,12 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>E:\Tools\assimp-5.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Tools\Lua\5.3.5\x64\include;E:\Tools\assimp-5.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\Tools\assimp-5.0.1;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Tools\Lua\5.3.5\x64;E:\Tools\assimp-5.0.1;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -21,6 +21,8 @@ bool System::initialize()
 	{
 		return false;
 	}
+	//std::string fileName("Script.lua");
+	//mGraphics->loadFromScript( fileName );
 	
 	return true;
 }
@@ -76,6 +78,11 @@ bool System::frame()
 	{
 		return false;
 	}
+	//if ( true == mInput->isKeyDown('F') )
+	//{
+	//	//std::string fileName("Script.lua");
+	//	//mGraphics->loadFromScript( fileName );
+	//}
 	if ( false == mGraphics->frame() )
 	{
 		return false;

@@ -36,7 +36,7 @@ public:
 	{
 		worldMatrix = mWorldMatrix;
 	}
-	void getOrthogonal( DirectX::XMMATRIX& orthogonalMatrix )
+	void getOrthogonalMatrix( DirectX::XMMATRIX& orthogonalMatrix )
 	{
 		orthogonalMatrix = mOrthogonalMatrix;
 	}
@@ -44,6 +44,14 @@ public:
 	{
 		strcpy_s( cardName, 128, mVideoCardDescription );
 		memory = mVideoCardMemory;
+	}
+	void turnZBufferOn()
+	{
+		mDeviceContext->OMSetDepthStencilState(mDepthStencilState, 1);
+	}
+	void turnZBufferOff()
+	{
+		mDeviceContext->OMSetDepthStencilState(mDepthDisabledStencilState, 1);
 	}
 private:
 	bool mIsVsyncEnabled;
@@ -60,4 +68,5 @@ private:
 	DirectX::XMMATRIX mProjectionMatrix;
 	DirectX::XMMATRIX mWorldMatrix;
 	DirectX::XMMATRIX mOrthogonalMatrix;
+	ID3D11DepthStencilState* mDepthDisabledStencilState;
 };

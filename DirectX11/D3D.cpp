@@ -5,7 +5,7 @@ D3D::D3D()
 	mSwapChain( nullptr ), mDevice( nullptr ), mDeviceContext( nullptr ),
 	mRenderTargetView( nullptr ),
 	mDepthStencilBuffer( nullptr ), mDepthStencilState( nullptr ), mDepthStencilView( nullptr ),
-	mRasterizerState( nullptr )
+	mRasterizerState( nullptr ), mDepthDisabledStencilState( nullptr )
 {
 	ZeroMemory( mVideoCardDescription, sizeof(mVideoCardDescription) );
 }
@@ -15,6 +15,7 @@ bool D3D::initialize( const int screenWidth, const int screenHeight,
 					 const float screenDepth, const float screenNear )
 {
 	mIsVsyncEnabled = isVsyncEnabled;
+
 	IDXGIFactory* factory = nullptr;
 	HRESULT result = CreateDXGIFactory( __uuidof(IDXGIFactory), (void**)&factory );
 	if ( FAILED(result) )
@@ -29,6 +30,7 @@ bool D3D::initialize( const int screenWidth, const int screenHeight,
 		return false;
 	}
 
+	// ¸ð´ÏÅÍ
 	IDXGIOutput* adapterOutput;
 	result = adapter->EnumOutputs(0, &adapterOutput);
 	if ( FAILED(result) )
@@ -243,6 +245,31 @@ bool D3D::initialize( const int screenWidth, const int screenHeight,
 	mWorldMatrix = DirectX::XMMatrixIdentity();
 	mOrthogonalMatrix = DirectX::XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
 
+	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
+	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+	depthDisabledStencilDesc.DepthEnable = false;//
+	depthDisabledStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthDisabledStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	depthDisabledStencilDesc.StencilEnable = true;
+	depthDisabledStencilDesc.StencilReadMask = 0xff;
+	depthDisabledStencilDesc.StencilWriteMask = 0xff;
+
+	depthDisabledStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	depthDisabledStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	depthDisabledStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	depthDisabledStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	result = mDevice->CreateDepthStencilState(&depthDisabledStencilDesc, &mDepthDisabledStencilState);
+	if ( FAILED(result) )
+	{
+		return false;	
+	}
+
 	return true;
 }
 
@@ -293,6 +320,12 @@ void D3D::shutDown( )
 	{
 		mDevice->Release( );
 		mSwapChain = nullptr;
+	}
+
+	if ( nullptr != mDepthDisabledStencilState )
+	{
+		mDepthDisabledStencilState->Release();
+		mDepthDisabledStencilState = nullptr;
 	}
 }
 
