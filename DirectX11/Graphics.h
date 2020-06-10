@@ -3,11 +3,12 @@
 #include "D3D.h"
 #include "Camera.h"
 //#include "Model.h"
-#include "Bitmap.h"
+//#include "Bitmap.h"
 //#include "LightShader.h"
 //#include "Light.h"
-#include "TextureShader.h"
-#include "Texture.h"
+//#include "TextureShader.h"
+//#include "Texture.h"
+#include "Text.h"
 
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLE = true;
@@ -34,7 +35,8 @@ private:
 	//std::unique_ptr<Model> mModel;
 	//std::unique_ptr<LightShader> mLightShader;
 	//std::unique_ptr<Light> mLight;
-	std::unique_ptr<Bitmap> mBitmap;
-	std::unique_ptr<TextureShader> mTextureShader;
-	std::unique_ptr<Texture> mTexture;
+	//std::unique_ptr<Bitmap> mBitmap;
+	//std::unique_ptr<TextureShader> mTextureShader;
+	//std::unique_ptr<Texture> mTexture;
+	std::unique_ptr<Text> mText;
 };

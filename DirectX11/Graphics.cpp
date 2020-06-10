@@ -62,7 +62,7 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 	//mLight->setSpecularColor( 1.f, 1.f, 1.f, 1.f );
 	//mLight->setSpecularPower( 5.f );
 
-	mBitmap = std::make_unique<Bitmap>();
+	/*mBitmap = std::make_unique<Bitmap>();
 	if ( nullptr == mBitmap )
 	{
 		return false;
@@ -91,6 +91,25 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 	mTexture = std::make_unique<Texture>();
 	if ( nullptr == mTexture )
 	{
+		return false;
+	}*/
+
+	mCamera->setPosition(0.0f, 0.0f, -1.0f);
+	mCamera->render();
+	DirectX::XMMATRIX baseViewMatrix;
+	mCamera->getViewMatrix(baseViewMatrix);
+	mText = std::make_unique<Text>();
+	if(!mText)
+	{
+		return false;
+	}
+	bool result = mText->initialize(mD3D->getDevice(),
+									mD3D->getDeviceContext(),
+									hWnd,
+									screenWidth, screenHeight, baseViewMatrix);
+	if(!result)
+	{
+		MessageBox(hWnd, L"Could not initialize the text object.", L"Error", MB_OK);
 		return false;
 	}
 	
@@ -145,6 +164,10 @@ bool Graphics::initialize( const int screenWidth, const int screenHeight, HWND h
 
 void Graphics::shutDown( )
 {
+	if(mText)
+	{
+		mText->shutDown();
+	}
 	if ( nullptr != mD3D )
 	{
 		mD3D->shutDown( );
@@ -159,10 +182,10 @@ void Graphics::shutDown( )
 	}*/
 	//if ( nullptr != mCamera )
 	//{ }
-	if ( nullptr != mBitmap )
+	/*if ( nullptr != mBitmap )
 	{
 		mBitmap->shutDown();
-	}
+	}*/
 }
 
 bool Graphics::frame()
@@ -206,7 +229,7 @@ bool Graphics::render(float rotation)
 
 	mD3D->turnZBufferOff();
 
-	bool result = mBitmap->render(mD3D->getDeviceContext(), 100, 100);
+	/*bool result = mBitmap->render(mD3D->getDeviceContext(), 100, 100);
 	if ( false == result )
 	{
 		return false;
@@ -217,7 +240,15 @@ bool Graphics::render(float rotation)
 	if ( false == result )
 	{
 		return false;
+	}*/
+
+	mD3D->turnOnAlphaBlending();
+	bool result = mText->render(mD3D->getDeviceContext(), worldMatrix, orthogonalMatrix);
+	if(!result)
+	{
+		return false;
 	}
+	mD3D->turnOffAlphaBlending();
 
 	mD3D->turnZBufferOn();
 

@@ -53,6 +53,8 @@ public:
 	{
 		mDeviceContext->OMSetDepthStencilState(mDepthDisabledStencilState, 1);
 	}
+	void turnOnAlphaBlending();
+	void turnOffAlphaBlending();
 private:
 	bool mIsVsyncEnabled;
 	int mVideoCardMemory;
@@ -69,4 +71,6 @@ private:
 	DirectX::XMMATRIX mWorldMatrix;
 	DirectX::XMMATRIX mOrthogonalMatrix;
 	ID3D11DepthStencilState* mDepthDisabledStencilState;
+	ID3D11BlendState* mAlphaEnableBlendingState;
+	ID3D11BlendState* mAlphaDisableBlendingState;
 };
