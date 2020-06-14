@@ -1,4 +1,6 @@
 #include "graphics.h"
+#include "Bitmap.h"
+#include "TextureShader.h"
 
 Graphics::Graphics()
 {
@@ -18,7 +20,7 @@ Graphics::~Graphics()
 }
 
 
-bool Graphics::initialize(int screenWidth, int screenHeight, HWND hwnd)
+bool Graphics::initialize(int screenWidth, int screenHeight, HWND hWnd)
 {
 	bool result;
 	XMMATRIX baseViewMatrix;
@@ -32,10 +34,10 @@ bool Graphics::initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the Direct3D object.
-	result = mD3D->initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
+	result = mD3D->initialize(screenWidth, screenHeight, VSYNC_ENABLED, hWnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
 	if(!result)
 	{
-		MessageBox(hwnd, L"Could not initialize Direct3D", L"Error", MB_OK);
+		MessageBox(hWnd, L"Could not initialize Direct3D", L"Error", MB_OK);
 		return false;
 	}
 
@@ -59,10 +61,31 @@ bool Graphics::initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the text object.
-	result = mText->initialize(mD3D->getDevice(), mD3D->getDeviceContext(), hwnd, screenWidth, screenHeight, baseViewMatrix);
+	result = mText->initialize(mD3D->getDevice(), mD3D->getDeviceContext(), hWnd, screenWidth, screenHeight, baseViewMatrix);
 	if(!result)
 	{
-		MessageBox(hwnd, L"Could not initialize the text object.", L"Error", MB_OK);
+		MessageBox(hWnd, L"Could not initialize the text object.", L"Error", MB_OK);
+		return false;
+	}
+
+	mMouseCursorImg = new Bitmap;
+	WCHAR cursorImgPath[] = L"data/Stone01.tga";
+	result = mMouseCursorImg->initialize(mD3D->getDevice(), screenWidth, screenHeight,
+										 cursorImgPath, 256, 256);
+	if(!result)
+	{
+		MessageBox(hWnd, L"Could not initialize the mouse image object.", L"Error", MB_OK);
+		return false;
+	}
+	mTextureShader = new TextureShader;
+	if ( nullptr == mTextureShader )
+	{
+		return false;
+	}
+	result = mTextureShader->initialize(mD3D->getDevice(), hWnd);
+	if ( false == result )
+	{
+		MessageBox(hWnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -72,6 +95,20 @@ bool Graphics::initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void Graphics::shutDown()
 {
+	if( nullptr != mMouseCursorImg )
+	{
+		mMouseCursorImg->shutDown();
+		delete mMouseCursorImg;
+		mMouseCursorImg = nullptr;
+	}
+
+	if ( nullptr != mTextureShader)
+	{
+		mTextureShader->shutDown();
+		delete mTextureShader;
+		mTextureShader = nullptr;
+	}
+
 	// Release the text object.
 	if(mText)
 	{
@@ -99,16 +136,32 @@ void Graphics::shutDown()
 }
 
 
-void Graphics::frame()
+bool Graphics::frame(int mouseX, int mouseY, unsigned char key)
 {
+	bool result;
+
+
+	// Set the location of the mouse.
+	result = mText->setMousePosition(mouseX, mouseY, mD3D->getDeviceContext());
+	if(!result)
+	{
+		return false;
+	}
+
+	result = mText->setKeysPressed(key, mD3D->getDeviceContext());
+	if(!result)
+	{
+		return false;
+	}
+
 	// Set the position of the camera.
 	mCamera->setPosition(0.0f, 0.0f, -10.0f);
 
-	return;
+	return true;
 }
 
 
-bool Graphics::render()
+bool Graphics::render(int mouseX, int mouseY)
 {
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
 	bool result;
@@ -135,6 +188,19 @@ bool Graphics::render()
 	// Render the text strings.
 	result = mText->render(mD3D->getDeviceContext(), worldMatrix, orthoMatrix);
 	if(!result)
+	{
+		return false;
+	}
+
+	result = mMouseCursorImg->render(mD3D->getDeviceContext(), mouseX, mouseY);
+	if(!result)
+	{
+		return false;
+	}
+
+	result = mTextureShader->render(mD3D->getDeviceContext(), mMouseCursorImg->getIndexCount(),
+									worldMatrix, viewMatrix, orthoMatrix, mMouseCursorImg->getTexture());
+	if ( false == result )
 	{
 		return false;
 	}

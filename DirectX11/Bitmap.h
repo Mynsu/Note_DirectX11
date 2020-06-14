@@ -3,7 +3,6 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include "Texture.h"
-#pragma comment(lib, "assimp-vc141-mtd")
 
 class Bitmap
 {
@@ -13,8 +12,8 @@ public:
 	{}
 	Bitmap( const Bitmap& ) = delete;
 	~Bitmap( ) = default;
-	bool initialize( ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-					int screenWidth, int screenHeight, char* textureFileName, int bitmapWidth, int bitmapHeight );
+	bool initialize( ID3D11Device* device,
+					int screenWidth, int screenHeight, WCHAR* textureFileName, int bitmapWidth, int bitmapHeight );
 	void shutDown( )
 	{
 		shutDownBuffers( );
@@ -53,10 +52,11 @@ private:
 	void shutDownBuffers( );
 	bool updateBuffers( ID3D11DeviceContext* deviceContext, int positionX, int positionY );
 	void renderBuffers( ID3D11DeviceContext* deviceContext );
-	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName );
+	bool loadTexture( ID3D11Device* device, WCHAR* fileName );
 	void releaseTexture( );
 	//bool loadModel( char* fileName );
 	//void releaseModel( );
+
 	ID3D11Buffer* mVertexBuffer;
 	ID3D11Buffer* mIndexBuffer;
 	int mVertexCount, mIndexCount;

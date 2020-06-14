@@ -1,5 +1,5 @@
 #include "text.h"
-
+#include <string>
 
 Text::Text()
 {
@@ -8,6 +8,7 @@ Text::Text()
 
 	mSentence1 = 0;
 	mSentence2 = 0;
+	mSentence3 = 0;
 }
 
 
@@ -73,13 +74,13 @@ bool Text::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 		return false;
 	}
 
-	// Now update the sentence vertex buffer with the new string information.
-	CHAR msg[] = "Hello";
-	result = updateSentence(mSentence1, msg, 100, 100, 1.0f, 1.0f, 1.0f, deviceContext);
-	if(!result)
-	{
-		return false;
-	}
+	//// Now update the sentence vertex buffer with the new string information.
+	//CHAR msg[] = "Hello";
+	//result = updateSentence(mSentence1, msg, 100, 100, 1.0f, 1.0f, 1.0f, deviceContext);
+	//if(!result)
+	//{
+	//	return false;
+	//}
 
 	// Initialize the first sentence.
 	result = initializeSentence(&mSentence2, 16, device);
@@ -88,9 +89,15 @@ bool Text::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 		return false;
 	}
 
-	// Now update the sentence vertex buffer with the new string information.
-	CHAR msg2[] = "Goodbye";
-	result = updateSentence(mSentence2, msg2, 100, 200, 1.0f, 1.0f, 0.0f, deviceContext);
+	//// Now update the sentence vertex buffer with the new string information.
+	//CHAR msg2[] = "Goodbye";
+	//result = updateSentence(mSentence2, msg2, 100, 200, 1.0f, 1.0f, 0.0f, deviceContext);
+	//if(!result)
+	//{
+	//	return false;
+	//}
+
+	result = initializeSentence(&mSentence3, 16, device);
 	if(!result)
 	{
 		return false;
@@ -107,6 +114,8 @@ void Text::shutDown()
 
 	// Release the second sentence.
 	releaseSentence(&mSentence2);
+
+	releaseSentence(&mSentence3);
 
 	// Release the font shader object.
 	if(mFontShader)
@@ -142,6 +151,68 @@ bool Text::render(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMA
 
 	// Draw the second sentence.
 	result = renderSentence(deviceContext, mSentence2, worldMatrix, orthoMatrix);
+	if(!result)
+	{
+		return false;
+	}
+
+	result = renderSentence(deviceContext, mSentence3, worldMatrix, orthoMatrix);
+	if(!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool Text::setMousePosition(int mouseX, int mouseY, ID3D11DeviceContext* deviceContext)
+{
+	char tempString[16];
+	char mouseString[16];
+	bool result;
+
+
+	// Convert the mouseX integer to string format.
+	_itoa_s(mouseX, tempString, 10);
+
+	// Setup the mouseX string.
+	strcpy_s(mouseString, "Mouse X: ");
+	strcat_s(mouseString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = updateSentence(mSentence1, mouseString, 20, 20, 1.0f, 1.0f, 1.0f, deviceContext);
+	if(!result)
+	{
+		return false;
+	}
+
+	// Convert the mouseY integer to string format.
+	_itoa_s(mouseY, tempString, 10);
+
+	// Setup the mouseY string.
+	strcpy_s(mouseString, "Mouse Y: ");
+	strcat_s(mouseString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = updateSentence(mSentence2, mouseString, 20, 40, 1.0f, 1.0f, 1.0f, deviceContext);
+	if(!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool Text::setKeysPressed(unsigned char key, ID3D11DeviceContext* deviceContext)
+{
+	char keyboardString[16];
+	bool result;
+
+	strcpy_s(keyboardString, "Keyboard: ");
+	strcat_s(keyboardString, std::to_string(key).data());
+
+	// Update the sentence vertex buffer with the new string information.
+	result = updateSentence(mSentence3, keyboardString, 20, 60, 0.0f, 1.0f, 0.0f, deviceContext);
 	if(!result)
 	{
 		return false;

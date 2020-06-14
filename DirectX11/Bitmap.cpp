@@ -1,13 +1,9 @@
 #include "Bitmap.h"
 #include <fstream>
-#include "assimp/Importer.hpp"
-#include "assimp/scene.h"
-#include "assimp/postprocess.h"
-#include "assimp/mesh.h"
 #include "Texture.h"
 
-bool Bitmap::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-						int screenWidth, int screenHeight, char* textureFileName, int bitmapWidth, int bitmapHeight)
+bool Bitmap::initialize(ID3D11Device* device,
+						int screenWidth, int screenHeight, WCHAR* textureFileName, int bitmapWidth, int bitmapHeight)
 {
 	mScreenWidth = screenWidth;
 	mScreenHeight = screenHeight;
@@ -24,7 +20,7 @@ bool Bitmap::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 		return false;
 	}
 
-	if ( false == loadTexture(device, deviceContext, textureFileName) )
+	if ( false == loadTexture(device, textureFileName) )
 	{
 		return false;
 	}
@@ -196,7 +192,7 @@ void Bitmap::renderBuffers( ID3D11DeviceContext* deviceContext )
 	deviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 }
 
-bool Bitmap::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
+bool Bitmap::loadTexture(ID3D11Device* device, WCHAR* fileName)
 {
 	mTexture = new Texture;
 	if ( nullptr == mTexture )
@@ -204,7 +200,7 @@ bool Bitmap::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContex
 		return false;
 	}
 
-	if ( false == mTexture->initialize(device, deviceContext, fileName) )
+	if ( false == mTexture->initialize(device, fileName) )
 	{
 		return false;
 	}

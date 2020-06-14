@@ -14,6 +14,7 @@ public:
 
 	bool initialize();
 	void shutDown();
+
 	void run();
 
 	LRESULT CALLBACK messageHandler(HWND, UINT, WPARAM, LPARAM);
@@ -23,11 +24,9 @@ private:
 	void initializeWindows(int&, int&);
 	void shutDownWindows();
 
-private:
 	LPCWSTR mApplicationName;
 	HINSTANCE mhInstance;
 	HWND mhWnd;
-
 	Input* mInput;
 	Graphics* mGraphics;
 };

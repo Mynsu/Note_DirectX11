@@ -11,6 +11,7 @@ public:
 	{}
 	TextureShader( const TextureShader& ) = delete;
 	~TextureShader( ) = default;
+
 	bool initialize( ID3D11Device* device, HWND hWnd )
 	{
 		WCHAR vs[] = L"texture.vs";
@@ -26,6 +27,7 @@ public:
 	{
 		shutDownShader();
 	}
+
 	bool render( ID3D11DeviceContext* deviceContext, int indexCount,
 				DirectX::XMMATRIX& worldMatrix, DirectX::XMMATRIX& viewMatrix, DirectX::XMMATRIX& projectionMatrix,
 				ID3D11ShaderResourceView* texture )
@@ -38,6 +40,7 @@ public:
 
 		return true;
 	}
+
 private:
 	struct MatrixBufferType
 	{
@@ -45,6 +48,7 @@ private:
 		DirectX::XMMATRIX view;
 		DirectX::XMMATRIX projection;
 	};
+
 	bool initializeShader( ID3D11Device* device, HWND hWnd, WCHAR* vsFileName, WCHAR* psFileName );
 	void shutDownShader( );
 	void outputShaderErrorMessage( ID3D10Blob* errorMessage, HWND hWnd, WCHAR* shaderFileName );
