@@ -1,14 +1,30 @@
-#include <memory>
-#include "System.h"
+#include "system.h"
 
-int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE, PSTR, int )
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow)
 {
-	std::unique_ptr<System> system( std::make_unique<System>() );
-	if ( true == system->initialize() )
+	System* system;
+	bool result;
+
+
+	// Create the system object.
+	system = new System;
+	if(!system)
+	{
+		return 0;
+	}
+
+	// Initialize and run the system object.
+	result = system->initialize();
+	if(result)
 	{
 		system->run();
 	}
+
+	// Shutdown and release the system object.
 	system->shutDown();
+	delete system;
+	system = 0;
 
 	return 0;
 }

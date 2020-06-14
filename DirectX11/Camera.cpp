@@ -1,35 +1,79 @@
 #include "Camera.h"
 
-void Camera::render( )
+Camera::Camera()
 {
-	DirectX::XMFLOAT3 up;
-	up.x = 0.f;
-	up.y = 1.f;
-	up.z = 0.f;
-	DirectX::XMVECTOR upVector = DirectX::XMLoadFloat3(&up);
+	mPositionX = 0.0f;
+	mPositionY = 0.0f;
+	mPositionZ = 0.0f;
 
-	DirectX::XMFLOAT3 position;
+	mRotationX = 0.0f;
+	mRotationY = 0.0f;
+	mRotationZ = 0.0f;
+}
+
+Camera::Camera(const Camera& other)
+{
+}
+
+Camera::~Camera()
+{
+}
+
+void Camera::setPosition(float x, float y, float z)
+{
+	mPositionX = x;
+	mPositionY = y;
+	mPositionZ = z;
+	return;
+}
+
+
+void Camera::setRotation(float x, float y, float z)
+{
+	mRotationX = x;
+	mRotationY = y;
+	mRotationZ = z;
+	return;
+}
+
+
+void Camera::render()
+{
+	XMFLOAT3 up;
+	XMFLOAT3 position;
+	XMFLOAT3 lookAt;
+	float radians;
+
+
+	// Setup the vector that points upwards.
+	up.x = 0.0f;
+	up.y = 1.0f;
+	up.z = 0.0f;
+
+	// Setup the position of the camera in the world.
 	position.x = mPositionX;
 	position.y = mPositionY;
 	position.z = mPositionZ;
-	DirectX::XMVECTOR positionVector = XMLoadFloat3(&position);
 
-	DirectX::XMFLOAT3 lookAt;
-	lookAt.x = 0.f;
-	lookAt.y = 0.f;
-	lookAt.z = 1.f;
-	DirectX::XMVECTOR lookAtVector = XMLoadFloat3(&lookAt);
+	// Calculate the rotation in radians.
+	radians = mRotationY * 0.0174532925f;
 
-	// 360 degree -> radian
-	float pitch = mRotationX * 0.0174532925f;
-	float yaw = mRotationY * 0.0174532925f;
-	float roll = mRotationZ * 0.0174532925f;
-	DirectX::XMMATRIX rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
+	// Setup where the camera is looking.
+	lookAt.x = sinf(radians) + mPositionX;
+	lookAt.y = mPositionY;
+	lookAt.z = cosf(radians) + mPositionZ;
 
-	lookAtVector = DirectX::XMVector3TransformCoord(lookAtVector, rotationMatrix);
-	upVector = DirectX::XMVector3TransformCoord(upVector, rotationMatrix);
-	
-	lookAtVector = DirectX::XMVectorAdd(positionVector, lookAtVector);
-	
-	mViewMatrix = DirectX::XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
+	// Create the view matrix from the three vectors.
+	XMVECTOR vPos = XMLoadFloat3(&position);
+	XMVECTOR vLookAt = XMLoadFloat3(&lookAt);
+	XMVECTOR vUp = XMLoadFloat3(&up);
+	mViewMatrix = XMMatrixLookAtLH(vPos, vLookAt, vUp);
+	return;
+}
+
+
+void Camera::getViewMatrix(XMMATRIX& viewMatrix)
+{
+	viewMatrix = mViewMatrix;
+	return;
 }

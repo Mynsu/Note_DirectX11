@@ -1,41 +1,36 @@
 #pragma once
+
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include "Input.h"
-#include "Graphics.h"
+#include <windows.h>
+#include "input.h"
+#include "graphics.h"
 
 class System
 {
 public:
-	System( )
-		: mAppName( nullptr ), mhInstance( 0 ), mhWnd( 0 ), mInput( nullptr ), mGraphics( nullptr )
-	{ }
-	System( const System& ) = delete;
-	~System( ) = default;
+	System();
+	System(const System&);
+	~System();
 
-	bool initialize( );
-	void run( );
-	void shutDown( )
-	{
-		if ( nullptr != mGraphics )
-		{
-			mGraphics->shutDown();
-		}
-		shutdownWindow();
-	}
-	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
+	bool initialize();
+	void shutDown();
+	void run();
+
+	LRESULT CALLBACK messageHandler(HWND, UINT, WPARAM, LPARAM);
+
 private:
-	bool frame( );
-	void initializeWindow( int* screenWidth, int* screenHeight );
-	void shutdownWindow( );
+	bool frame();
+	void initializeWindows(int&, int&);
+	void shutDownWindows();
 
-	LPCWSTR mAppName;
+private:
+	LPCWSTR mApplicationName;
 	HINSTANCE mhInstance;
 	HWND mhWnd;
-	std::unique_ptr<Input> mInput;
-	std::unique_ptr<Graphics> mGraphics;
+
+	Input* mInput;
+	Graphics* mGraphics;
 };
 
-static LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
-
-static System* AppHandle = nullptr;
+static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+static System* ApplicationHandle = 0;

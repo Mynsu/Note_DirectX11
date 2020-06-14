@@ -1,13 +1,44 @@
-#include "Texture.h"
-#include <stdio.h>
+#include "texture.h"
+///#include <assimp/Importer.hpp>
+///#include <assimp/scene.h>
+///#include <assimp/texture.h>
 
-bool Texture::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
+Texture::Texture()
 {
-	DirectX::ScratchImage image = loadTextureFromFile(fileName);
-	HRESULT result = DirectX::CreateShaderResourceView(device,
-													   image.GetImages(), image.GetImageCount(),
-													   image.GetMetadata(), &mTextureView);
-	if ( FAILED(result) )
+	mTexture = 0;
+}
+
+
+Texture::Texture(const Texture& other)
+{
+}
+
+
+Texture::~Texture()
+{
+}
+
+
+bool Texture::initialize(ID3D11Device* device, WCHAR* filename)
+{
+	HRESULT result;
+
+
+	// Load the texture in.
+	///Assimp::Importer importer;
+	///char filePath[100];
+	///sprintf(filePath, "%ws", filename);
+	///const aiScene* scene = importer.ReadFile(filePath, 0);
+	///scene->GetEmbeddedTexture().;
+
+	DirectX::ScratchImage image;
+	result = DirectX::LoadFromTGAFile(filename, nullptr, image);
+	if(FAILED(result))
+	{
+		return false;
+	}
+	result = CreateShaderResourceView(device, image.GetImages(), image.GetImageCount(), image.GetMetadata(), &mTexture);
+	if(FAILED(result))
 	{
 		return false;
 	}
@@ -15,46 +46,21 @@ bool Texture::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContex
 	return true;
 }
 
+
 void Texture::shutDown()
 {
-	if ( nullptr != mTextureView )
-	{
-		mTextureView->Release();
-		mTextureView = nullptr;
-	}
-	if ( nullptr != mTexture )
+	// Release the texture resource.
+	if(mTexture)
 	{
 		mTexture->Release();
-		mTexture = nullptr;
+		mTexture = 0;
 	}
-	if ( nullptr != mTargaData )
-	{
-		delete[] mTargaData;
-		mTargaData = nullptr;
-	}
+
+	return;
 }
 
-DirectX::ScratchImage Texture::loadTextureFromFile(LPCSTR fileName)
-{
-	std::string str(fileName);
-	std::wstring wsTmp(str.begin(), str.end());
-	std::wstring ws( wsTmp );
-	WCHAR ext[_MAX_EXT];
-	_wsplitpath_s(ws.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, ext, _MAX_EXT);
-	HRESULT hr;
-	DirectX::ScratchImage image;
-	if ( 0 == _wcsicmp(ext, L".dds") )
-	{
-		hr = DirectX::LoadFromDDSFile(ws.c_str(), DirectX::DDS_FLAGS_NONE, nullptr, image);
-	}
-	else if ( 0 == _wcsicmp(ext, L".tga") )
-	{
-		hr = DirectX::LoadFromTGAFile(ws.c_str(), nullptr, image);
-	}
-	else if ( 0 == _wcsicmp(ext, L".wic") )
-	{
-		hr = DirectX::LoadFromWICFile(ws.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, image);
-	}
 
-	return image;
+ID3D11ShaderResourceView* Texture::getTexture()
+{
+	return mTexture;
 }

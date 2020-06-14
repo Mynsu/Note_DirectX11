@@ -57,6 +57,9 @@
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Text.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -135,10 +138,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="data\cube.txt">
+    <Text Include="data\FontData.txt">
       <Filter>리소스 파일</Filter>
     </Text>
-    <Text Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\fontData.txt">
+    <Text Include="data\Cube.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>
@@ -146,16 +149,16 @@
     <Image Include="data\Diffuse_2K.tga">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="data\stone01.tga">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="data\wood.tga">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="data\Bump_2K.tga">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\font.tga">
+    <Image Include="data\Wood.tga">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="data\Stone01.tga">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="data\FontTexture.tga">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

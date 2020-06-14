@@ -1,64 +1,49 @@
 #pragma once
-#pragma comment(lib, "d3d11" )
-#pragma comment(lib, "dxgi" )
-#pragma comment(lib, "d3dcompiler" )
-#pragma comment(lib, "directxtex.lib")
+
+#pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "d3d11.lib")
 #include <d3d11.h>
-#include <DirectXMath.h>
+#include <directxmath.h>
+using namespace DirectX;
 
 class D3D
 {
 public:
+	static void* operator new(size_t size)
+	{
+		return _aligned_malloc(size, 16);
+	}
+	static void operator delete(void* memory)
+	{
+		_aligned_free(memory);
+	}
+
 	D3D();
-	D3D( const D3D& ) = delete;
-	~D3D() = default;
+	D3D(const D3D&);
+	~D3D();
 
-	bool initialize( const int screenWidth, const int screenHeight,
-					const bool isVsyncEnabled, HWND hWindow, const bool isFullScreen,
-					const float screenDepth, const float screenNear );
-	void shutDown( );
-	void beginScene( const float red, const float green, const float blue, const float alpha );
-	void endScene( );
+	bool initialize(int, int, bool, HWND, bool, float, float);
+	void shutDown();
 
-	ID3D11Device* getDevice( )
-	{
-		return mDevice;
-	}
-	ID3D11DeviceContext* getDeviceContext( )
-	{
-		return mDeviceContext;
-	}
-	void getProjectionMatrix( DirectX::XMMATRIX& projectionMatrix )
-	{
-		projectionMatrix = mProjectionMatrix;
-	}
-	void getWorldMatrix( DirectX::XMMATRIX& worldMatrix )
-	{
-		worldMatrix = mWorldMatrix;
-	}
-	void getOrthogonalMatrix( DirectX::XMMATRIX& orthogonalMatrix )
-	{
-		orthogonalMatrix = mOrthogonalMatrix;
-	}
-	void getVideoCardInfo( char* cardName, int& memory )
-	{
-		strcpy_s( cardName, 128, mVideoCardDescription );
-		memory = mVideoCardMemory;
-	}
-	void turnZBufferOn()
-	{
-		mDeviceContext->OMSetDepthStencilState(mDepthStencilState, 1);
-	}
-	void turnZBufferOff()
-	{
-		mDeviceContext->OMSetDepthStencilState(mDepthDisabledStencilState, 1);
-	}
+	void beginScene(float, float, float, float);
+	void endScene();
+
+	ID3D11Device* getDevice();
+	ID3D11DeviceContext* getDeviceContext();
+
+	void getProjectionMatrix(XMMATRIX&);
+	void getWorldMatrix(XMMATRIX&);
+	void getOrthoMatrix(XMMATRIX&);
+
+	void turnZBufferOn();
+	void turnZBufferOff();
+
 	void turnOnAlphaBlending();
 	void turnOffAlphaBlending();
+
 private:
-	bool mIsVsyncEnabled;
-	int mVideoCardMemory;
-	char mVideoCardDescription[128];
+	bool mVsyncEnabled;
+
 	IDXGISwapChain* mSwapChain;
 	ID3D11Device* mDevice;
 	ID3D11DeviceContext* mDeviceContext;
@@ -66,10 +51,12 @@ private:
 	ID3D11Texture2D* mDepthStencilBuffer;
 	ID3D11DepthStencilState* mDepthStencilState;
 	ID3D11DepthStencilView* mDepthStencilView;
-	ID3D11RasterizerState* mRasterizerState;
-	DirectX::XMMATRIX mProjectionMatrix;
-	DirectX::XMMATRIX mWorldMatrix;
-	DirectX::XMMATRIX mOrthogonalMatrix;
+	ID3D11RasterizerState* mRasterState;
+
+	XMMATRIX mProjectionMatrix;
+	XMMATRIX mWorldMatrix;
+	XMMATRIX mOrthoMatrix;
+
 	ID3D11DepthStencilState* mDepthDisabledStencilState;
 	ID3D11BlendState* mAlphaEnableBlendingState;
 	ID3D11BlendState* mAlphaDisableBlendingState;

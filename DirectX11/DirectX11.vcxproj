@@ -29,6 +29,9 @@
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\FontShader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Text.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -123,23 +126,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\fontData.txt" />
-    <Text Include="data\cube.txt">
+    <Text Include="data\FontData.txt" />
+    <Text Include="data\Cube.txt">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\data\font.tga" />
+    <Image Include="data\FontTexture.tga" />
     <Image Include="data\Bump_2K.tga">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Image>
     <Image Include="data\Diffuse_2K.tga">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Image>
-    <Image Include="data\stone01.tga">
+    <Image Include="data\Stone01.tga">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Image>
-    <Image Include="data\wood.tga">
+    <Image Include="data\Wood.tga">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Image>
   </ItemGroup>
