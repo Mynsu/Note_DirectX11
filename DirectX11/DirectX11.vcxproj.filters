@@ -60,6 +60,27 @@
     <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Input.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Frustum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ModelList.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Position.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\FPS.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\CPU.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Timer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Light.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -110,6 +131,24 @@
     <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Text.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Frustum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\ModelList.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Position.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\FPS.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\CPU.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Timer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="light.vs">
@@ -117,9 +156,6 @@
     </None>
     <None Include="light.ps">
       <Filter>셰이더 파일</Filter>
-    </None>
-    <None Include="data\Moon 2K.fbx">
-      <Filter>리소스 파일</Filter>
     </None>
     <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\texture.vs">
       <Filter>셰이더 파일</Filter>
@@ -134,6 +170,9 @@
       <Filter>셰이더 파일</Filter>
     </None>
     <None Include="..\..\..\..\%40Mynsu\Rendering\DirectX11\DirectX11\Script.lua">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\Moon_2K.fbx">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>

@@ -23,6 +23,12 @@ public:
 	void setRotation(float, float, float);
 	void render();
 	void getViewMatrix(XMMATRIX&);
+
+	//
+	XMFLOAT3 getPosition() const
+	{
+		return {mRotationX, mRotationY, mRotationZ};
+	}
 private:
 	XMMATRIX mViewMatrix;
 	float mPositionX, mPositionY, mPositionZ;

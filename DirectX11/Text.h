@@ -37,6 +37,10 @@ public:
 	void shutDown();
 	bool render(ID3D11DeviceContext*, XMMATRIX, XMMATRIX);
 
+	///bool setMousePosition(int, int, ID3D11DeviceContext*);
+	///bool setFPS(int, ID3D11DeviceContext*);
+	///bool setCPU(int, ID3D11DeviceContext*);
+	bool setRenderCount(int, ID3D11DeviceContext*);
 private:
 	bool initializeSentence(SentenceType**, int, ID3D11Device*);
 	bool updateSentence(SentenceType*, char*, int, int, float, float, float, ID3D11DeviceContext*);

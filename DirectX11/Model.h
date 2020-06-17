@@ -13,7 +13,7 @@ public:
 	{}
 	Model( const Model& ) = delete;
 	~Model( ) = default;
-	bool initialize( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName, char* modelFileName );
+	bool initialize( ID3D11Device* device, WCHAR* textureFileName, char* modelFileName );
 	void shutDown( )
 	{
 		shutDownBuffers( );
@@ -50,9 +50,9 @@ private:
 	bool initializeBuffers( ID3D11Device* device );
 	void shutDownBuffers( );
 	void renderBuffers( ID3D11DeviceContext* deviceContext );
-	bool loadTexture( ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName );
+	bool loadTexture( ID3D11Device* device, WCHAR* fileName );
 	void releaseTexture( );
-	bool loadModel( char* fileName );
+	bool loadModel(char* fileName);
 	//void releaseModel( );
 	ID3D11Buffer* mVertexBuffer;
 	ID3D11Buffer* mIndexBuffer;

@@ -259,7 +259,7 @@ namespace DirectX
         ScratchImage(const ScratchImage&) = delete;
         ScratchImage& operator=(const ScratchImage&) = delete;
 
-        HRESULT __cdecl Initialize( _In_ const TexMetadata& mdata, _In_ DWORD flags = CP_FLAGS_NONE );
+        HRESULT __cdecl initialize( _In_ const TexMetadata& mdata, _In_ DWORD flags = CP_FLAGS_NONE );
 
         HRESULT __cdecl Initialize1D( _In_ DXGI_FORMAT fmt, _In_ size_t length, _In_ size_t arraySize, _In_ size_t mipLevels, _In_ DWORD flags = CP_FLAGS_NONE );
         HRESULT __cdecl Initialize2D( _In_ DXGI_FORMAT fmt, _In_ size_t width, _In_ size_t height, _In_ size_t arraySize, _In_ size_t mipLevels, _In_ DWORD flags = CP_FLAGS_NONE );
@@ -308,7 +308,7 @@ namespace DirectX
         Blob(const Blob&) = delete;
         Blob& operator=(const Blob&) = delete;
 
-        HRESULT __cdecl Initialize( _In_ size_t size );
+        HRESULT __cdecl initialize( _In_ size_t size );
 
         void __cdecl Release();
 

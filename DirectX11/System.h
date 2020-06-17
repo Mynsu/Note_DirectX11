@@ -4,6 +4,10 @@
 #include <windows.h>
 #include "input.h"
 #include "graphics.h"
+#include "position.h"
+#include "fps.h"
+#include "cpu.h"
+#include "timer.h"
 
 class System
 {
@@ -30,6 +34,10 @@ private:
 
 	Input* mInput;
 	Graphics* mGraphics;
+	Position* m_Position;
+	FPS* mFPS;
+	CPU* mCPU;
+	Timer* mTimer;
 };
 
 static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

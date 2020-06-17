@@ -6,7 +6,7 @@
 #include "assimp/mesh.h"
 #include "Texture.h"
 
-bool Model::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFileName, char* modelFileName)
+bool Model::initialize(ID3D11Device* device, WCHAR* textureFileName, char* modelFileName)
 {
 	if ( false == loadModel(modelFileName) )
 	{
@@ -18,7 +18,7 @@ bool Model::initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 		return false;
 	}
 
-	if ( false == loadTexture(device, deviceContext, textureFileName) )
+	if ( false == loadTexture(device, textureFileName) )
 	{
 		return false;
 	}
@@ -113,7 +113,7 @@ void Model::renderBuffers( ID3D11DeviceContext* deviceContext )
 	deviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 }
 
-bool Model::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
+bool Model::loadTexture(ID3D11Device* device, WCHAR* fileName)
 {
 	mTexture = new Texture;
 	if ( nullptr == mTexture )
@@ -121,7 +121,7 @@ bool Model::loadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 		return false;
 	}
 
-	if ( false == mTexture->initialize(device, deviceContext, fileName) )
+	if ( false == mTexture->initialize(device, fileName) )
 	{
 		return false;
 	}

@@ -5,6 +5,10 @@ System::System()
 {
 	mInput = 0;
 	mGraphics = 0;
+	m_Position = 0;
+	mFPS = 0;
+	mCPU = 0;
+	mTimer = 0;
 }
 
 
@@ -39,7 +43,12 @@ bool System::initialize()
 	}
 
 	// Initialize the input object.
-	mInput->initialize();
+	result = mInput->initialize(mhInstance, mhWnd, screenWidth, screenHeight);
+	if(!result)
+	{
+		MessageBox(mhWnd, L"Could not initialize the input object.", L"Error", MB_OK);
+		return false;
+	}
 
 	// Create the graphics object.  This object will handle rendering all the graphics for this application.
 	mGraphics = new Graphics;
@@ -55,12 +64,83 @@ bool System::initialize()
 		return false;
 	}
 
+	// Create the position object.
+	m_Position = new Position;
+	if(!m_Position)
+	{
+		return false;
+	}
+
+	// Create the fps object.
+	mFPS = new FPS;
+	if(!mFPS)
+	{
+		return false;
+	}
+
+	// Initialize the fps object.
+	mFPS->initialize();
+
+	// Create the cpu object.
+	mCPU = new CPU;
+	if(!mCPU)
+	{
+		return false;
+	}
+
+	// Initialize the cpu object.
+	mCPU->initialize();
+
+	// Create the timer object.
+	mTimer = new Timer;
+	if(!mTimer)
+	{
+		return false;
+	}
+
+	// Initialize the timer object.
+	result = mTimer->initialize();
+	if(!result)
+	{
+		MessageBox(mhWnd, L"Could not initialize the Timer object.", L"Error", MB_OK);
+		return false;
+	}
+
 	return true;
 }
 
 
 void System::shutDown()
 {
+	// Release the timer object.
+	if(mTimer)
+	{
+		delete mTimer;
+		mTimer = 0;
+	}
+
+	// Release the cpu object.
+	if(mCPU)
+	{
+		mCPU->shutDown();
+		delete mCPU;
+		mCPU = 0;
+	}
+
+	// Release the fps object.
+	if(mFPS)
+	{
+		delete mFPS;
+		mFPS = 0;
+	}
+
+	// Release the position object.
+	if(m_Position)
+	{
+		delete m_Position;
+		m_Position = 0;
+	}
+
 	// Release the graphics object.
 	if(mGraphics)
 	{
@@ -72,6 +152,7 @@ void System::shutDown()
 	// Release the input object.
 	if(mInput)
 	{
+		mInput->shutDown();
 		delete mInput;
 		mInput = 0;
 	}
@@ -120,7 +201,7 @@ void System::run()
 		}
 
 		// Check if the user pressed escape and wants to quit.
-		if(mInput->isKeyDown(VK_ESCAPE))
+		if(mInput->isEscapePressed() == true)
 		{
 			done = true;
 		}
@@ -132,11 +213,50 @@ void System::run()
 
 bool System::frame()
 {
-	bool result;
+	bool keyDown, result;
+	float rotationY;
 
+	// Update the system stats.
+	mTimer->frame();
+	///mFPS->frame();
+	///mCPU->frame();
+
+	// Do the input frame processing.
+	result = mInput->frame();
+	if(!result)
+	{
+		return false;
+	}
+
+	/// Get the location of the mouse from the input object,
+	///m_Input->GetMouseLocation(mouseX, mouseY);
+
+	/// Do the frame processing for the graphics object.
+	///result = m_Graphics->Frame(mouseX, mouseY);
+	///if(!result)
+	///{
+	///	return false;
+	///}
+
+	// Set the frame time for calculating the updated position.
+	m_Position->setFrameTime(mTimer->getTime());
+
+	// Check if the left or right arrow key has been pressed, if so rotate the camera accordingly.
+	keyDown = mInput->isLeftArrowPressed();
+	m_Position->turnLeft(keyDown);
+
+	keyDown = mInput->isRightArrowPressed();
+	m_Position->turnRight(keyDown);
+
+	// Get the current view point rotation.
+	m_Position->getRotation(rotationY);
 
 	// Do the frame processing for the graphics object.
-	mGraphics->frame();
+	result = mGraphics->frame(rotationY);
+	if(!result)
+	{
+		return false;
+	}
 
 	// Finally render the graphics to the screen.
 	result = mGraphics->render();
@@ -149,32 +269,9 @@ bool System::frame()
 }
 
 
-LRESULT CALLBACK System::messageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK System::messageHandler(HWND hWnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {
-	switch(umsg)
-	{
-		// Check if a key has been pressed on the keyboard.
-		case WM_KEYDOWN:
-		{
-			// If a key is pressed send it to the input object so it can record that state.
-			mInput->keyDown((unsigned int)wparam);
-			return 0;
-		}
-
-		// Check if a key has been released on the keyboard.
-		case WM_KEYUP:
-		{
-			// If a key is released then send it to the input object so it can unset the state for that key.
-			mInput->keyUp((unsigned int)wparam);
-			return 0;
-		}
-
-		// Any other messages send to the default message handler as our application won't make use of them.
-		default:
-		{
-			return DefWindowProc(hwnd, umsg, wparam, lparam);
-		}
-	}
+	return DefWindowProc(hWnd, umsg, wparam, lparam);
 }
 
 

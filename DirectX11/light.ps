@@ -3,39 +3,28 @@ SamplerState SampleType;
 
 cbuffer LightBuffer
 {
-	float4 ambientColor;
 	float4 diffuseColor;
-	float3 lightPosition;
-	float specularPower;
-	float4 specularColor;
+	float3 lightDirection;
 };
 
 struct PixelInputType
 {
-	float4 position : SV_POSITION;
-	float2 tex : TEXCOORD0;
-	float3 diffuse : TEXCOORD1;
-	float3 viewDirection : TEXCOORD2;
-	float3 reflection : TEXCOORD3;
+    float4 position : SV_POSITION;
+    float2 tex : TEXCOORD0;
+	float3 normal : NORMAL;
 };
 
-float4 LightPixelShader( PixelInputType input ) : SV_TARGET
+float4 LightPixelShader(PixelInputType input) : SV_TARGET
 {
-	float4 textureColor = shaderTexture.Sample(SampleType, input.tex);
-
-	float4 diffuse = saturate(float4(input.diffuse, 1));
-	float4 outputColor = ambientColor;
-
-	float4 specular = 0.0f;
-	if ( diffuse.x > 0 )
-	{
-		outputColor += diffuse * diffuseColor;
-		specular = saturate(dot(input.reflection, -input.viewDirection));
-		specular = pow(specular, specularPower);
-	}
-	outputColor = outputColor * textureColor;
-
-	outputColor = saturate(outputColor + specular);
-
-	return outputColor;
+	float4 textureColor;
+	float3 lightDir;
+	float lightIntensity;
+	float4 color;
+	textureColor = shaderTexture.Sample(SampleType, input.tex);
+	lightDir = -lightDirection;
+	lightIntensity = saturate(dot(input.normal, lightDir));
+	color = saturate(diffuseColor * lightIntensity);
+	color = color * textureColor;
+	
+	return color;
 }
